@@ -8,13 +8,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Arrays;
 
 @RequestMapping("/api/v1/user")
 @RestController
 public class UserController {
 
     private final UserService userService;
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     public UserController(UserService userService) {
@@ -23,11 +25,14 @@ public class UserController {
 
     @PostMapping
     public Boolean addUser(@Valid @NotNull @RequestBody User user) {
+
         return userService.addUser(user);
     }
 
     @GetMapping(path = "{id}")
     public User getUserByID(@PathVariable("id") String id) {
+        System.out.println("hello world");
+        System.out.println(Arrays.toString(InetAddress.getLoopbackAddress().getAddress()));
         return userService.getUserByID(id);
     }
 

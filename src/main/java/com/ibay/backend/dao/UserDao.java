@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface UserDao {
 
-    Boolean columnContains(String columnName, String table, String value);
+    Boolean columnContains(String table, String columnName, String value);
 
     Boolean insertUser(String id, Timestamp regTime, User user);
 

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.Optional;
 
 
 @Service
@@ -18,16 +17,20 @@ public class UserService {
 
     private final UserDao userDao;
 
+
+
     @Autowired
-    public UserService(@Qualifier("postgres") UserDao userDao) {
+    public UserService(@Qualifier("postgresUser") UserDao userDao) {
         this.userDao = userDao;
     }
+
+
 
     private String generateUniqueID() {
         String id;
         do {
             id = RandomStringUtils.randomAlphanumeric(8);
-        } while (userDao.columnContains("ibay_user","username", id));
+        } while (userDao.columnContains("ibay_user","userID", id));
         return id;
     }
 
