@@ -9,6 +9,8 @@ app:
 spring:
   flyway:
     locations: classpath:/db/migration/postgres
+  profiles:
+    active: production
 
 
 

@@ -1,7 +1,9 @@
-package com.ibay.backend.dao;
+package com.ibay.backend.dao.postgres;
 
+import com.ibay.backend.dao.UserDao;
 import com.ibay.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +11,8 @@ import java.sql.Timestamp;
 import java.util.List;
 
 
-@Repository("postgresUser")
+@Profile("production")
+@Repository
 public class UserDataAccessService implements UserDao {
 
     private final JdbcTemplate jdbcTemplate;
@@ -17,6 +20,7 @@ public class UserDataAccessService implements UserDao {
     @Autowired
     public UserDataAccessService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        System.out.println("works");
     }
 
 

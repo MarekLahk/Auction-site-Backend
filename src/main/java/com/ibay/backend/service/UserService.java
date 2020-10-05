@@ -7,6 +7,7 @@ import com.ibay.backend.model.User;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -20,7 +21,7 @@ public class UserService {
 
 
     @Autowired
-    public UserService(@Qualifier("postgresUser") UserDao userDao) {
+    public UserService( UserDao userDao) {
         this.userDao = userDao;
     }
 
