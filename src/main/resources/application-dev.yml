@@ -1,0 +1,14 @@
+app:
+  datasource:
+    jdbcUrl: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  flyway:
+    locations: classpath:/db/migration/h2
+
+
+
