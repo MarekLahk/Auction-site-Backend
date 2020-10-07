@@ -13,21 +13,20 @@ import java.util.List;
 
 @Profile("production")
 @Repository
-public class UserDataAccessService implements UserDao {
+public class UserDataAccessServicePostgres implements UserDao {
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public UserDataAccessService(JdbcTemplate jdbcTemplate) {
+    public UserDataAccessServicePostgres(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        System.out.println("works");
     }
 
 
     @Override
     public Boolean columnContains(String table, String columnName, String value) {
         final String sqlQuery = String.format(
-                        "SELECT count(%s) FROM %s WHERE %s = '%s'"
+                        "SELECT COUNT(%s) as Count FROM %s WHERE %s = '%s'"
                         , columnName, table, columnName, value);
 
         return jdbcTemplate.query(sqlQuery, (resultsSet, i) -> resultsSet.getInt("count")).get(0) > 0;

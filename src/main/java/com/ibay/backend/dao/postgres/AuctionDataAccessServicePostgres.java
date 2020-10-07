@@ -8,13 +8,12 @@ import org.springframework.stereotype.Repository;
 
 @Profile("production")
 @Repository()
-public class AuctionDataAccessService implements AuctionDao {
+public class AuctionDataAccessServicePostgres implements AuctionDao {
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public AuctionDataAccessService(JdbcTemplate jdbcTemplate) {
+    public AuctionDataAccessServicePostgres(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        System.out.println("works");
     }
 }
