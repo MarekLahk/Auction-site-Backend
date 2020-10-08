@@ -1,26 +1,35 @@
 package com.ibay.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import org.springframework.jdbc.core.RowMapper;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class Auction {
+public class Auction implements RowMapper<Auction> {
 
-    @Getter private final String title;
+    @Getter private String title;
 
-    @Getter private final String description;
+    @Getter private String description;
 
-    @Getter private final Integer duration;
+    @Getter private Integer duration;
 
-    @Getter private final String ownerID;
+    @Getter private String ownerID;
 
-    @Getter private final List<String> imageURLList;
+    @Getter private List<String> imageURLList;
 
-    @Getter private final Timestamp endTime;
+    @Getter private Timestamp endTime;
 
 
-    public Auction(String title, String description, Integer duration, String ownerID, List<String> imageURLList, Timestamp endTime) {
+    public Auction(@JsonProperty("title") String title,
+                   @JsonProperty("description") String description,
+                   @JsonProperty("duration") Integer duration,
+                   @JsonProperty("ownerID") String ownerID,
+                   List<String> imageURLList,
+                   Timestamp endTime) {
         this.title = title;
         this.description = description;
         this.duration = duration;
@@ -37,4 +46,21 @@ public class Auction {
         this.imageURLList = imageURLList;
         this.endTime = ConversionFunctions.parseTimestampString(endTime);
     }
+
+    public Auction() {
+    }
+
+    @Override
+    public Auction mapRow(ResultSet rs, int rowNum) throws SQLException {
+        return  new Auction(
+                rs.getString("title"),
+                rs.getString("description"),
+                null,
+                rs.getString("auctionOwner"),
+                null,
+                rs.getTimestamp("endDateTime")
+        );
+    }
+
+
 }
