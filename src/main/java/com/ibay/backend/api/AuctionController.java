@@ -7,7 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/api/v1/auction")
 @RestController
@@ -30,11 +35,18 @@ public class AuctionController {
         return auctionService.selectAuctionByID(id);
     }
 
-    public Boolean deleteAuctionByID(String id) {
-        return null;
+    @DeleteMapping(path = "{id}")
+    public Boolean deleteAuctionByID(@PathVariable("id") String id) {
+        return auctionService.deleteAuctionByID(id);
     }
 
+    @PutMapping
     public Boolean updateAuctionByID(String id, Auction auction) {
-        return null;
+        return auctionService.updateAuctionByID(auction);
+    }
+
+    @GetMapping()
+    public List<Auction> getAuctionsByParameter(@RequestParam @NotBlank LinkedHashMap<String, String> parameters) {
+        return auctionService.selectAuctionsByParameter(parameters);
     }
 }

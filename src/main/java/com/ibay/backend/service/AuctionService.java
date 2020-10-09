@@ -4,10 +4,11 @@ import com.ibay.backend.dao.AuctionDao;
 import com.ibay.backend.model.Auction;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class AuctionService {
@@ -22,8 +23,8 @@ public class AuctionService {
     }
 
     public String addAuction(Auction auction) {
-        return auctionDao.insertAuction(RandomStringUtils.randomAlphanumeric(15),
-                new Timestamp(System.currentTimeMillis()), auction);
+        auction.calculateEndTime();
+        return auctionDao.insertAuction(RandomStringUtils.randomAlphanumeric(15), auction);
     }
 
     public Auction selectAuctionByID(String id) {
@@ -31,10 +32,19 @@ public class AuctionService {
     }
 
     public Boolean deleteAuctionByID(String id) {
-        return null;
+        return auctionDao.deleteAuctionByID(id);
     }
 
-    public Boolean updateAuctionByID(String id, Auction auction) {
-        return null;
+    public Boolean updateAuctionByID(Auction auction) {
+        return auctionDao.updateAuctionByID(auction);
     }
+
+    public List<Auction> selectAuctionsByParameter(Map<String, String> parameters) {
+        parameters = ServiceParamChecks.convertAuctionRequestParams(parameters);
+        parameters = ServiceParamChecks.removeEmptyParams(parameters);
+        if (ServiceParamChecks.isParamsEmpty(parameters)) return null; //TODO Add Exception
+        return auctionDao.selectAuctionsByParameter(parameters);
+        //return auctionDao.selectAuctionsByParameter(parameters);
+    }
+
 }

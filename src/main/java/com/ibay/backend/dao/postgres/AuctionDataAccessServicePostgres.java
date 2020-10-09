@@ -8,6 +8,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Profile("production")
 @Repository()
@@ -30,12 +33,12 @@ public class AuctionDataAccessServicePostgres implements AuctionDao {
     }
 
     @Override
-    public String insertAuction(String id, Timestamp endTimeDate, Auction auction) {
+    public String insertAuction(String id,  Auction auction) {
         final String sqlQuery = String.format("INSERT INTO auctions" +
                         " (auctionID, auctionOwner, title, description, createTime, endDateTime)" +
                         " VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
                 id, auction.getOwnerID(), auction.getTitle(), auction.getDescription(),
-                new Timestamp(System.currentTimeMillis()), endTimeDate);
+                new Timestamp(System.currentTimeMillis()), auction.getEndTime());
         jdbcTemplate.update(sqlQuery);
         return id;
     }
@@ -43,18 +46,27 @@ public class AuctionDataAccessServicePostgres implements AuctionDao {
     @Override
     public Auction selectAuctionByID(String id) {
         final String sqlQuery = String.format("SELECT * FROM auctions WHERE auctionID = '%s'", id);
-        Auction auction;
-        return jdbcTemplate.queryForObject(sqlQuery, new Object[]{id}, new Auction());
+        return jdbcTemplate.queryForObject(sqlQuery, new Auction());
 
     }
 
     @Override
     public Boolean deleteAuctionByID(String id) {
+        final String sqlQuery = String.format("DELETE FROM auctions WHERE auctionID = '%s'", id);
+        return jdbcTemplate.update(sqlQuery) > 0 ? Boolean.TRUE : Boolean.FALSE;
+    }
+
+    @Override
+    public Boolean updateAuctionByID(Auction auction) {
+        //TODO Add update functionality
         return null;
     }
 
     @Override
-    public Boolean updateAuctionByID(String id, Auction auction) {
-        return null;
+    public List<Auction> selectAuctionsByParameter(Map<String, String> parameters) {
+        Map.Entry<String, String> param = parameters.entrySet().iterator().next();
+        System.out.println(param);
+        final String sqlQuery = String.format("SELECT * FROM auctions WHERE %s = '%s'", param.getKey(), param.getValue());
+        return jdbcTemplate.query(sqlQuery, new Auction());
     }
 }

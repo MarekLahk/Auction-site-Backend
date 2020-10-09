@@ -1,5 +1,6 @@
 package com.ibay.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import org.springframework.jdbc.core.RowMapper;
@@ -8,7 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Auction implements RowMapper<Auction> {
 
     @Getter private String title;
@@ -36,6 +40,7 @@ public class Auction implements RowMapper<Auction> {
         this.ownerID = ownerID;
         this.imageURLList = imageURLList;
         this.endTime = endTime;
+        calculateEndTime();
     }
 
     public Auction(String title, String description, Integer duration, String ownerID, List<String> imageURLList, String endTime) {
@@ -45,6 +50,7 @@ public class Auction implements RowMapper<Auction> {
         this.ownerID = ownerID;
         this.imageURLList = imageURLList;
         this.endTime = ConversionFunctions.parseTimestampString(endTime);
+        calculateEndTime();
     }
 
     public Auction() {
@@ -52,7 +58,7 @@ public class Auction implements RowMapper<Auction> {
 
     @Override
     public Auction mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return  new Auction(
+        return new Auction(
                 rs.getString("title"),
                 rs.getString("description"),
                 null,
@@ -61,6 +67,17 @@ public class Auction implements RowMapper<Auction> {
                 rs.getTimestamp("endDateTime")
         );
     }
+
+    public Boolean calculateEndTime() {
+        if (this.endTime == null && this.duration != null) {
+
+            this.endTime = new Timestamp(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(duration));
+            return true;
+        }
+        return false;
+    }
+
+
 
 
 }
