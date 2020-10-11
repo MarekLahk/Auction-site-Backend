@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping
-    public Boolean addUser(@Valid @NotNull @RequestBody User user) {
+    public String addUser(@Valid @NotNull @RequestBody User user) {
 
         return userService.addUser(user);
     }

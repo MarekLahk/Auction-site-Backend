@@ -30,15 +30,17 @@ public class UserService {
     private String generateUniqueID() {
         String id;
         do {
-            id = RandomStringUtils.randomAlphanumeric(8);
+            id = RandomStringUtils.randomAlphanumeric(12);
         } while (userDao.columnContains("ibay_user","userID", id));
         return id;
     }
 
-    public Boolean addUser(User user) {
+    public String addUser(User user) {
         if (userDao.columnContains("ibay_user", "username", user.getUsername())) { throw new UsernameTakenException(); }
         if (userDao.columnContains("ibay_user", "email", user.getEmail())) { throw new EmailTakenException(); }
-        return userDao.insertUser(generateUniqueID(),new Timestamp(System.currentTimeMillis()), user);
+        final var id = generateUniqueID();
+        if (userDao.insertUser(id,new Timestamp(System.currentTimeMillis()), user)) return id;
+        return null;
     }
 
 
@@ -51,6 +53,7 @@ public class UserService {
     }
 
     public Boolean updateUserByID(String id, User user) {
+        //TODO add update functionality
         return userDao.updateUserByID(id, user);
     }
 }
