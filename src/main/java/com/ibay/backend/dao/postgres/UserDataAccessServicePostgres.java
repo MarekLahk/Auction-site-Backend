@@ -4,11 +4,12 @@ import com.ibay.backend.dao.UserDao;
 import com.ibay.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.Map;
 
 
 @Profile("production")
@@ -56,20 +57,11 @@ public class UserDataAccessServicePostgres implements UserDao {
     @Override
     public User selectUserByID(String id) {
         final String sqlQuery = String.format("SELECT * FROM ibay_user WHERE userID = '%s'", id);
-        List<User> userList = jdbcTemplate.query(sqlQuery, (resultSet, i) -> {
-
-            if (resultSet.getString("userid") == null) {
-                return null;
-            } else return new User(
-                    resultSet.getString("userID"),
-                    resultSet.getString("username"),
-                    resultSet.getString("email"),
-                    resultSet.getString("full_name"),
-                    resultSet.getTimestamp("registration_date")
-
-                    );
-        });
-        return userList.size() > 0 ? userList.get(0) : null;
+        try {
+            return jdbcTemplate.queryForObject(sqlQuery, new User());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
@@ -79,7 +71,15 @@ public class UserDataAccessServicePostgres implements UserDao {
     }
 
     @Override
-    public Boolean updateUserByID(String id, User user) {
-        return false;
+    public Boolean updateUserByID(String id, Map<String, String> updateFields) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("UPDATE ibay_user SET ");
+        String prefix = "";
+        for (String key : updateFields.keySet()) {
+            sb.append(prefix).append(key).append("='").append(updateFields.get(key)).append("'");
+            prefix=",";
+        }
+        sb.append(" WHERE userid = '").append(id).append("'");
+        return jdbcTemplate.update(sb.toString()) > 0? Boolean.TRUE : Boolean.FALSE;
     }
 }

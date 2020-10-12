@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Map;
 
 
 @Service
@@ -53,7 +54,17 @@ public class UserService {
     }
 
     public Boolean updateUserByID(String id, User user) {
-        //TODO add update functionality
-        return userDao.updateUserByID(id, user);
+        final Map<String, String> updateFields = user.getUpdateFields();
+        if (updateFields.containsKey("username")) {
+            if (userDao.columnContains("ibay_user", "username", updateFields.get("username"))) {
+                throw new UsernameTakenException();
+            }
+        }
+        if (updateFields.containsKey("email")) {
+            if (userDao.columnContains("ibay_user", "email", updateFields.get("email"))) {
+                throw new EmailTakenException();
+            }
+        }
+        return userDao.updateUserByID(id, updateFields);
     }
 }

@@ -1,10 +1,9 @@
 package com.ibay.backend.dao;
 
 import com.ibay.backend.model.User;
-import org.apache.commons.lang3.RandomStringUtils;
 
 import java.sql.Timestamp;
-import java.util.Optional;
+import java.util.Map;
 
 
 public interface UserDao {
@@ -17,5 +16,5 @@ public interface UserDao {
 
     Boolean deleteUserByID(String id);
 
-    Boolean updateUserByID(String id, User user);
+    Boolean updateUserByID(String id, Map<String, String> updateFields);
 }
