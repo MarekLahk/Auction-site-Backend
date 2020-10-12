@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-
+@Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Auction implements RowMapper<Auction> {
 

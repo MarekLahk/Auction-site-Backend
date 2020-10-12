@@ -1,10 +1,10 @@
-package com.ibay.backend.exceptions.userExceptions.definitions;
+package com.ibay.backend.exceptions.pidExceptions.definitions;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public enum UserErrorDefinitions {
+public enum BidErrorDefinitions {
 
     /*EXAMPLE("error/bid/{unique id here}",
             "Message that may be displayed to the user",
@@ -12,20 +12,21 @@ public enum UserErrorDefinitions {
             {HTTP status}
             ) */
 
-    USERNAME_TAKEN (
-            "error/user/0001",
-            "Username is already taken",
-            "" ,
-            HttpStatus.CONFLICT
+    AUCTION_ENDED(
+            "error/bid/0001",
+            "Auction has ended.",
+            "Bids cannot be made to already ended auctions",
+            HttpStatus.FORBIDDEN
     ),
 
-    EMAIL_TAKEN(
-         "error/user/0002",
-         "Email is already in use",
-         "",
-         HttpStatus.CONFLICT
-    );
+    BID_TOO_LOW(
+            "error/bid/0002",
+            "Current highest bid is higher then your bid",
+            "New bid must be higher then the current highest bid",
+            HttpStatus.CONFLICT
+    )
 
+    ;
 
     private final String errorCode;
 
@@ -35,13 +36,11 @@ public enum UserErrorDefinitions {
 
     private final String devMessage;
 
-    UserErrorDefinitions(String errorCode, String userMessage, String devMessage, HttpStatus status) {
+    BidErrorDefinitions(String errorCode, String userMessage, String devMessage, HttpStatus status) {
         this.errorCode = errorCode;
         this.userMessage = userMessage;
         this.devMessage = devMessage;
         this.status = status;
 
     }
-
-
 }

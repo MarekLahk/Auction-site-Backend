@@ -1,9 +1,10 @@
 package com.ibay.backend.exceptions;
 
+import com.ibay.backend.exceptions.pidExceptions.definitions.BidErrorDefinitions;
 import com.ibay.backend.exceptions.userExceptions.definitions.UserErrorDefinitions;
 import lombok.Getter;
 
-public class ExceptionBody {
+public class ExceptionBody{
 
     @Getter private final String errorCode;
     @Getter private final String userMessage;
@@ -27,4 +28,10 @@ public class ExceptionBody {
     }
 
 
+    public ExceptionBody(BidErrorDefinitions definition) {
+        this.errorCode = definition.getErrorCode();
+        this.userMessage = definition.getUserMessage();
+        this.devMessage = definition.getDevMessage();
+        this.status = definition.getStatus().value();
+    }
 }
