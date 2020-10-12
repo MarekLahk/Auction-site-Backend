@@ -24,8 +24,8 @@ public class BidController {
     }
 
     @GetMapping(path = "{id}")
-    public Bid getBid(@PathVariable String id) {
-        return bidService.a(id);
+    public Bid getBidByID(@PathVariable UUID id) {
+        return bidService.getBidByID(id);
     }
 
 }

@@ -58,7 +58,7 @@ public class UserDataAccessServicePostgres implements UserDao {
         final String sqlQuery = String.format("SELECT * FROM ibay_user WHERE userID = '%s'", id);
         List<User> userList = jdbcTemplate.query(sqlQuery, (resultSet, i) -> {
 
-            if (resultSet.getString("id") == null) {
+            if (resultSet.getString("userid") == null) {
                 return null;
             } else return new User(
                     resultSet.getString("userID"),

@@ -2,6 +2,7 @@ package com.ibay.backend.api;
 
 
 import com.ibay.backend.model.Auction;
+import com.ibay.backend.model.Bid;
 import com.ibay.backend.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +49,10 @@ public class AuctionController {
     @GetMapping()
     public List<Auction> getAuctionsByParameter(@RequestParam @NotBlank LinkedHashMap<String, String> parameters) {
         return auctionService.selectAuctionsByParameter(parameters);
+    }
+
+    @GetMapping(path = "{id}/highest")
+    public Bid getAuctionHighestBid(@PathVariable("id") String id) {
+        return auctionService.getAuctionHighestBid(id);
     }
 }

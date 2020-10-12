@@ -23,7 +23,7 @@ public class Bid implements RowMapper<Bid> {
 
     public Bid(@JsonProperty("id") UUID bidID,
                @JsonProperty("auctionID") @NotNull String auctionID,
-               @JsonProperty("bidOwner") @NotNull String bidOwnerID,
+               @JsonProperty("bidOwnerID") @NotNull String bidOwnerID,
                @JsonProperty("bidAmount") @NotNull BigDecimal bidAmount) {
         this.bidID = bidID;
         this.auctionID = auctionID;

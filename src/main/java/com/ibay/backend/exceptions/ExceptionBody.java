@@ -34,4 +34,16 @@ public class ExceptionBody{
         this.devMessage = definition.getDevMessage();
         this.status = definition.getStatus().value();
     }
+
+    public ExceptionBody(BidErrorDefinitions definition, String message) {
+        this.errorCode = definition.getErrorCode();
+        if (message != null && !message.strip().equals("")) {
+            this.userMessage = message;
+        } else {
+            this.userMessage = definition.getUserMessage();
+        }
+        this.devMessage = definition.getDevMessage();
+        this.status = definition.getStatus().value();
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.ibay.backend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
@@ -52,6 +53,7 @@ public class User {
         return (string == null || string.strip().isEmpty());
     }
 
+    @JsonIgnore
     public Map<String, String> getUpdateFields() {
         Map<String, String> output = new HashMap<>();
 

@@ -24,6 +24,13 @@ public enum BidErrorDefinitions {
             "Current highest bid is higher then your bid",
             "New bid must be higher then the current highest bid",
             HttpStatus.CONFLICT
+    ),
+
+    BID_INVALID_ARGUMENTS(
+            "error/bid/0003",
+            "Something went wrong with your bid",
+            "Request includes invalid data",
+            HttpStatus.BAD_REQUEST
     )
 
     ;

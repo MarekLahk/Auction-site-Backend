@@ -29,7 +29,6 @@ public class BidDataAccessServicePostgres implements BidDao {
                 "INSERT INTO AUCTION_BIDS (BIDID, BIDAUCTIONID, BIDOWNERID, BIDAMOUNT, BIDDATETIME)" +
                 " VALUES ('%s', '%s', '%s', '%s', '%s')",
                 id, bid.getAuctionID(), bid.getBidOwnerID(), bid.getBidAmount(), createTime);
-        System.out.println("here1");
         return jdbcTemplate.update(sqlQuery) > 0;
     }
 

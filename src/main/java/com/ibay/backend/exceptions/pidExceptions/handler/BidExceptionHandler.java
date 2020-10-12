@@ -2,6 +2,7 @@ package com.ibay.backend.exceptions.pidExceptions.handler;
 
 import com.ibay.backend.exceptions.ExceptionBody;
 import com.ibay.backend.exceptions.pidExceptions.AuctionEndedException;
+import com.ibay.backend.exceptions.pidExceptions.BidArgumentException;
 import com.ibay.backend.exceptions.pidExceptions.BidTooLowException;
 import com.ibay.backend.exceptions.pidExceptions.definitions.BidErrorDefinitions;
 import com.ibay.backend.exceptions.userExceptions.UsernameTakenException;
@@ -29,5 +30,12 @@ public class BidExceptionHandler {
     ExceptionBody usernameTakenExceptionHandler(BidTooLowException exception) {
         return new ExceptionBody(BidErrorDefinitions.BID_TOO_LOW);
 
+    }
+
+    @ResponseBody
+    @ExceptionHandler(BidArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ExceptionBody BidArgumentExceptionHandler(BidArgumentException exception) {
+        return new ExceptionBody(BidErrorDefinitions.BID_INVALID_ARGUMENTS, exception.getMessage());
     }
 }
