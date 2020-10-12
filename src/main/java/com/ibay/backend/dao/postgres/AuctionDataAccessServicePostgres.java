@@ -4,6 +4,7 @@ import com.ibay.backend.dao.AuctionDao;
 import com.ibay.backend.model.Auction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -46,7 +47,11 @@ public class AuctionDataAccessServicePostgres implements AuctionDao {
     @Override
     public Auction selectAuctionByID(String id) {
         final String sqlQuery = String.format("SELECT * FROM auctions WHERE auctionID = '%s'", id);
-        return jdbcTemplate.queryForObject(sqlQuery, new Auction());
+        try {
+            return jdbcTemplate.queryForObject(sqlQuery, new Auction());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
 
     }
 

@@ -25,14 +25,29 @@ public class BidService {
     private Boolean evaluateBid(Bid bid) {
         Auction auction = auctionDao.selectAuctionByID(bid.getAuctionID());
         if (auction != null) {
+            if (auction.getEndTime().after(new Timestamp(System.currentTimeMillis()))) {
+                Bid highestBid = bidDao.getHighestBid(bid.getAuctionID());
+                if (highestBid != null) {
+                    if (!highestBid.getBidOwnerID().equals(bid.getBidOwnerID())) {
+                        if (highestBid.getBidAmount().compareTo(bid.getBidAmount()) < 0) {
+                            System.out.println("here");
+                            return true;
+                        }
+                    }
+                } else {
+                    return true;
+                }
+            }
         }
-
-        return true;
+        System.out.println("exit");
+        return false;
     }
 
     public UUID addBid(Bid bid) {
-        final var id = UUID.randomUUID();
-        if (bidDao.addBid(id, bid, new Timestamp(System.currentTimeMillis()))) return id;
+        if (evaluateBid(bid)) {
+            final var id = UUID.randomUUID();
+            if (bidDao.addBid(id, bid, new Timestamp(System.currentTimeMillis()))) return id;
+        }
         return null;
     }
 

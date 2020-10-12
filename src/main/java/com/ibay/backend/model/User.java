@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
 
@@ -48,7 +48,19 @@ public class User {
     }
 
 
+    private boolean isEmpty(String string) {
+        return (string == null || string.strip().isEmpty());
+    }
 
+    public Map<String, String> getUpdateFields() {
+        Map<String, String> output = new HashMap<>();
+
+        if (!isEmpty(this.full_name)) output.put("full_name", this.getFull_name());
+        if (!isEmpty(this.email)) output.put("email", this.email);
+        if (!isEmpty(this.username)) output.put("username", this.username);
+
+        return output;
+    }
 
 
 }
