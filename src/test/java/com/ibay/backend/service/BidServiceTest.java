@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -34,16 +35,16 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 class BidServiceTest {
 
-    @Autowired
+    @MockBean
     public BidDao bidDao;
 
-    @Autowired
+    @MockBean
     IdGenerator idGenerator;
 
-    @Autowired
+    @MockBean
     AuctionDao auctionDao;
 
-    @Autowired
+    @MockBean
     UserDao userDao;
 
     public BidService bidService;
@@ -63,25 +64,7 @@ class BidServiceTest {
         this.bidService = new BidService(bidDao, auctionDao, userDao);
 
     }
-
-
-    @Test
-    void addBid() {
-
-
-        /*assertThrows(BidArgumentException.class, () -> bidService.addBid(null));
-        when(auctionDao.selectAuctionByID(bid.getAuctionID())).thenReturn(null).thenReturn(auctionEnded).thenReturn(auctionOngoing);
-        when(userDao.columnContains("ibay_user", "userid", bid.getBidOwnerID())).thenReturn(Boolean.FALSE).thenReturn(Boolean.TRUE);
-        assertEquals("No such user exists", assertThrows(BidArgumentException.class, () -> bidService.addBid(bid)).getMessage());
-        assertEquals("No such auction found", assertThrows(BidArgumentException.class, () -> bidService.addBid(bid)).getMessage());
-        assertEquals("Auction has ended", assertThrows(BidArgumentException.class, () -> bidService.addBid(bid)).getMessage());
-        assertEquals("Auction owner cannot bid on their own auction", assertThrows(BidArgumentException.class, () -> bidService.addBid(bid)).getMessage());
-        when(auctionDao.selectAuctionByID(bid.getAuctionID())).thenReturn(auctionEnded);
-        when(bidDao.getHighestBid(bid.getAuctionID())).thenReturn(bidSameBidder).thenReturn(bidLowerDiffOwner).thenReturn(bidHigherDiffOwner);
-        assertEquals("User is already the highest bidder", assertThrows(BidArgumentException.class, () -> bidService.addBid(bid)).getMessage());
-        assertThrows(BidArgumentException.class, () -> bidService.addBid(bid));
-        assertThrows(BidArgumentException.class, () -> bidService.addBid(bid));*/
-    }
+    
 
     @Test
     @Order(1)

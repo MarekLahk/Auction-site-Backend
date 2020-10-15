@@ -2,6 +2,7 @@ package com.ibay.backend.service;
 
 import com.ibay.backend.dao.AuctionDao;
 import com.ibay.backend.dao.BidDao;
+import com.ibay.backend.exceptions.auctionExceptions.AuctionInvalidParametersException;
 import com.ibay.backend.model.Auction;
 import com.ibay.backend.model.Bid;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -28,6 +29,7 @@ public class AuctionService {
     }
 
     public String addAuction(Auction auction) {
+
         auction.calculateEndTime();
         return auctionDao.insertAuction(RandomStringUtils.randomAlphanumeric(15), auction);
     }
@@ -47,7 +49,7 @@ public class AuctionService {
     public List<Auction> selectAuctionsByParameter(Map<String, String> parameters) {
         parameters = ServiceParamChecks.convertAuctionRequestParams(parameters);
         parameters = ServiceParamChecks.removeEmptyParams(parameters);
-        if (ServiceParamChecks.isParamsEmpty(parameters)) return null; //TODO Add Exception
+        if (ServiceParamChecks.isParamsEmpty(parameters)) throw new AuctionInvalidParametersException();
         return auctionDao.selectAuctionsByParameter(parameters);
 
     }

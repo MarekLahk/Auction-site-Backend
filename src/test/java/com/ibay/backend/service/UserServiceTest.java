@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
@@ -31,10 +32,10 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class UserServiceTest {
 
-    @Autowired
+    @MockBean
     public UserDao userDao;
 
-    @Autowired
+    @MockBean
     IdGenerator idGenerator;
 
     public UserService userService;

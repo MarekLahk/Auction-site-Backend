@@ -18,7 +18,6 @@ import java.util.Map;
 
 
 @Service
-@Profile("!test")
 public class UserService {
 
     private final UserDao userDao;

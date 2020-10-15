@@ -13,7 +13,7 @@ public class IdGeneratorMock {
 
     @Primary
     @Bean
-    public IdGenerator idGenerator(){
+    public IdGenerator IdGenerator(){
         return Mockito.mock(IdGenerator.class);
     }
 
