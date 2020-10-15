@@ -21,7 +21,6 @@ public class BidExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     ExceptionBody AuctionEndedExceptionHandler(AuctionEndedException exception) {
         return new ExceptionBody(BidErrorDefinitions.AUCTION_ENDED);
-
     }
 
     @ResponseBody

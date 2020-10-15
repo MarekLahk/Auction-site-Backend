@@ -2,9 +2,11 @@ package com.ibay.backend.dao.postgres;
 
 
 import com.ibay.backend.dao.BidDao;
+import com.ibay.backend.exceptions.generalExceptions.IdGenerationException;
 import com.ibay.backend.model.Bid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -29,7 +31,11 @@ public class BidDataAccessServicePostgres implements BidDao {
                 "INSERT INTO AUCTION_BIDS (BIDID, BIDAUCTIONID, BIDOWNERID, BIDAMOUNT, BIDDATETIME)" +
                 " VALUES ('%s', '%s', '%s', '%s', '%s')",
                 id, bid.getAuctionID(), bid.getBidOwnerID(), bid.getBidAmount(), createTime);
-        return jdbcTemplate.update(sqlQuery) > 0;
+        try {
+            return jdbcTemplate.update(sqlQuery) > 0;
+        } catch (DuplicateKeyException e) {
+            throw new IdGenerationException();
+        }
     }
 
     @Override

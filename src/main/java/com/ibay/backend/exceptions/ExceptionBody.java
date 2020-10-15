@@ -1,5 +1,6 @@
 package com.ibay.backend.exceptions;
 
+import com.ibay.backend.exceptions.generalExceptions.definitions.GeneralErrorDefinitions;
 import com.ibay.backend.exceptions.pidExceptions.definitions.BidErrorDefinitions;
 import com.ibay.backend.exceptions.userExceptions.definitions.UserErrorDefinitions;
 import lombok.Getter;
@@ -17,8 +18,6 @@ public class ExceptionBody{
         this.devMessage = devMessage;
         this.status = status;
     }
-
-
 
     public ExceptionBody(UserErrorDefinitions definition) {
         this.errorCode = definition.getErrorCode();
@@ -42,6 +41,13 @@ public class ExceptionBody{
         } else {
             this.userMessage = definition.getUserMessage();
         }
+        this.devMessage = definition.getDevMessage();
+        this.status = definition.getStatus().value();
+    }
+
+    public ExceptionBody(GeneralErrorDefinitions definition) {
+        this.errorCode = definition.getErrorCode();
+        this.userMessage = definition.getUserMessage();
         this.devMessage = definition.getDevMessage();
         this.status = definition.getStatus().value();
     }

@@ -29,10 +29,7 @@ public class UserDataAccessServicePostgres implements UserDao {
         final String sqlQuery = String.format(
                         "SELECT COUNT(%s) as Count FROM %s WHERE %s = '%s'"
                         , columnName, table, columnName, value);
-
         return jdbcTemplate.query(sqlQuery, (resultsSet, i) -> resultsSet.getInt("count")).get(0) > 0;
-
-
     }
 
     @Override
@@ -42,18 +39,9 @@ public class UserDataAccessServicePostgres implements UserDao {
                         " VALUES ('%s', '%s', '%s', '%s', '%s')",
                 id, user.getUsername(), user.getFull_name(), user.getEmail(), regTime.toString());
         return jdbcTemplate.update(sqlQuery) > 0 ? Boolean.TRUE : Boolean.FALSE;
-
     }
 
-//    @Override
-//    public List<User> selectAllUsers() {
-//        final String sqlQuery = "SELECT id, username FROM ibay_user";
-//        return jdbcTemplate.query(sqlQuery, (resultSet, i) -> {
-//            String id = resultSet.getString("id");
-//            String username = resultSet.getString("username");
-//            return new User(id, username, email, full_name, registrationDate);
-//        });
-//    }
+
     @Override
     public User selectUserByID(String id) {
         final String sqlQuery = String.format("SELECT * FROM ibay_user WHERE userID = '%s'", id);

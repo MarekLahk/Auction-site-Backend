@@ -1,5 +1,6 @@
 package com.ibay.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import org.springframework.jdbc.core.RowMapper;
@@ -41,5 +42,10 @@ public class Bid implements RowMapper<Bid> {
                 rs.getString("bidOwnerID"),
                 rs.getBigDecimal("bidAmount")
         );
+    }
+
+    @JsonIgnore
+    public String toTestString() {
+        return bidID.toString() + auctionID + bidOwnerID + bidAmount.stripTrailingZeros().toPlainString();
     }
 }

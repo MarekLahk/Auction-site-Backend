@@ -9,12 +9,14 @@ import com.ibay.backend.model.Auction;
 import com.ibay.backend.model.Bid;
 import com.ibay.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 
 @Service
+@Profile("!test")
 public class BidService {
 
     private final BidDao bidDao;
@@ -28,43 +30,26 @@ public class BidService {
         this.userDao = userDao;
     }
 
+
     private Boolean evaluateBid(Bid bid) {
+        if (bid == null) return false;
+        Boolean userExists = userDao.columnContains("ibay_user", "userid", bid.getBidOwnerID());
+        if (userExists == Boolean.FALSE) throw new BidArgumentException("No such user exists");
         Auction auction = auctionDao.selectAuctionByID(bid.getAuctionID());
-        User user = userDao.selectUserByID(bid.getBidOwnerID());
-        if (user == null) {
-            throw new BidArgumentException("No such user exists");
-        }
-        if (auction != null) {
-            if (auction.getEndTime().after(new Timestamp(System.currentTimeMillis()))) {
-                Bid highestBid = bidDao.getHighestBid(bid.getAuctionID());
-                if (highestBid != null) {
-                    if (!highestBid.getBidOwnerID().equals(bid.getBidOwnerID())) {
-                        if (highestBid.getBidAmount().compareTo(bid.getBidAmount()) < 0) {
-                            System.out.println("here");
-                            return true;
-                        } else {
-                            throw new BidTooLowException();
-                        }
-                    } else {
-                        throw new BidArgumentException("User is already the highest bidder");
-                    }
-                } else {
-                    return true;
-                }
-            } else {
-                throw new BidArgumentException("Auction has ended");
-            }
-        } else {
-            throw new BidArgumentException("No such auction found");
-        }
+        if (auction == null) throw new BidArgumentException("No such auction found");
+        if (auction.getEndTime().before(new Timestamp(System.currentTimeMillis()))) throw new BidArgumentException("Auction has ended");
+        if (auction.getOwnerID().equals(bid.getBidOwnerID())) throw new BidArgumentException("Auction owner cannot bid on their own auction");
+        Bid highestBid = bidDao.getHighestBid(bid.getAuctionID());
+        if (highestBid == null) return Boolean.TRUE;
+        if (highestBid.getBidOwnerID().equals(bid.getBidOwnerID())) throw new BidArgumentException("User is already the highest bidder");
+        if (highestBid.getBidAmount().compareTo(bid.getBidAmount()) >= 0) throw new BidTooLowException();
+        return Boolean.TRUE;
     }
 
     public UUID addBid(Bid bid) {
         if (evaluateBid(bid)) {
             final var id = UUID.randomUUID();
             if (bidDao.addBid(id, bid, new Timestamp(System.currentTimeMillis()))) return id;
-        } else {
-            throw new BidArgumentException();
         }
         return null;
     }

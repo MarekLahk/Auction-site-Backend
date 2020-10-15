@@ -1,11 +1,10 @@
-
-
 app:
   datasource:
-    jdbcUrl: jdbc:h2:file:./src/main/resources/H2DB/DevDB;AUTO_SERVER=TRUE
+    jdbcUrl: jdbc:h2:file:./src/main/resources/H2DB/TestTB;AUTO_SERVER=TRUE
     driver-class-name: org.h2.Driver
     username: sa
     password: password
+
 
 spring:
   jpa:
@@ -15,7 +14,7 @@ spring:
     locations: classpath:/db/migration/h2
     schemas: PUBLIC
   profiles:
-    active: "development"
+    active: "test"
   h2:
     console:
       enabled: true
@@ -23,8 +22,4 @@ spring:
     jpa:
       repositories:
         bootstrap-mode: default
-
-
-
-
 

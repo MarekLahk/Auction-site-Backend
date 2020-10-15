@@ -31,8 +31,6 @@ public class UserController {
 
     @GetMapping(path = "{id}")
     public User getUserByID(@PathVariable("id") String id) {
-        System.out.println("hello world");
-        System.out.println(Arrays.toString(InetAddress.getLoopbackAddress().getAddress()));
         return userService.getUserByID(id);
     }
 

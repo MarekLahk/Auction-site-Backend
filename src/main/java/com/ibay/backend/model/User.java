@@ -62,9 +62,9 @@ public class User implements RowMapper<User> {
     public Map<String, String> getUpdateFields() {
         Map<String, String> output = new HashMap<>();
 
-        if (!isEmpty(this.full_name) && !this.getFull_name().strip().equals("")) output.put("full_name", this.getFull_name());
-        if (!isEmpty(this.email) && !this.getEmail().strip().equals("")) output.put("email", this.email);
-        if (!isEmpty(this.username) && !this.getUsername().strip().equals("")) output.put("username", this.username);
+        if (!isEmpty(this.full_name)) output.put("full_name", this.getFull_name());
+        if (!isEmpty(this.email)) output.put("email", this.email);
+        if (!isEmpty(this.username)) output.put("username", this.username);
 
         return output;
     }
@@ -80,4 +80,11 @@ public class User implements RowMapper<User> {
                 rs.getTimestamp("registration_date")
         );
     }
+
+
+    @JsonIgnore
+    public String toTestString() {
+        return id+username+email+full_name;
+    }
+
 }
