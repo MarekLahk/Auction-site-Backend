@@ -4,7 +4,9 @@ import com.ibay.backend.MocksApplication;
 import com.ibay.backend.model.User;
 import com.ibay.backend.service.UserService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -24,45 +26,51 @@ import static org.mockito.Mockito.*;
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 @ContextConfiguration(classes = {MocksApplication.class})
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
 public class UserControllerTest {
 
 
-    @Autowired
     public UserController userController;
-
-    @Autowired
     public UserService userService;
 
 
     private User user = new User("id", "username", "email", "name", (Timestamp)null);
 
+    @BeforeAll
+    void setUp() {
+
+        userService = mock(UserService.class);
+
+        userController = new UserController(userService);
+    }
+
     @Test
     void addUserReturnUser() {
-        when(userController.addUser(user)).thenReturn(user.getId());
-        assertEquals(user.getId(),userService.addUser(user));
+        when(userService.addUser(user)).thenReturn(user.getId());
+        assertEquals(user.getId(),userController.addUser(user));
     }
 
     @Test
     void getUserByID() {
-        when(userController.getUserByID("id")).thenReturn(user);
-        assertEquals(user, userService.getUserByID(user.getId()));
+        when(userService.getUserByID("id")).thenReturn(user);
+        assertEquals(user, userController.getUserByID(user.getId()));
     }
 
     @Test
     void deleteUserByID() {
-        when(userController.deleteUserByID("id")).thenReturn(Boolean.TRUE);
-        when(userController.deleteUserByID("wrongID")).thenReturn(Boolean.FALSE);
-        assertEquals(userService.deleteUserByID("id"), Boolean.TRUE);
-        assertEquals(userService.deleteUserByID("wrongID"), Boolean.FALSE);
+        when(userService.deleteUserByID("id")).thenReturn(Boolean.TRUE);
+        when(userService.deleteUserByID("wrongID")).thenReturn(Boolean.FALSE);
+        assertEquals(userController.deleteUserByID("id"), Boolean.TRUE);
+        assertEquals(userController.deleteUserByID("wrongID"), Boolean.FALSE);
     }
 
     @Test
     void updateUserByID() {
         final User updateUser = new User(null, "New username", "New email", "New name", (Timestamp) null);
-        when(userController.updateUserByID("id", updateUser)).thenReturn(Boolean.TRUE);
-        when(userController.updateUserByID("wrongID", updateUser)).thenReturn(Boolean.FALSE);
-        assertEquals(userService.updateUserByID("id", updateUser), Boolean.TRUE);
-        assertEquals(userService.updateUserByID("wrongID", updateUser), Boolean.FALSE);
+        when(userService.updateUserByID("id", updateUser)).thenReturn(Boolean.TRUE);
+        when(userService.updateUserByID("wrongID", updateUser)).thenReturn(Boolean.FALSE);
+        assertEquals(userController.updateUserByID("id", updateUser), Boolean.TRUE);
+        assertEquals(userController.updateUserByID("wrongID", updateUser), Boolean.FALSE);
     }
 }

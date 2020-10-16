@@ -3,6 +3,7 @@ package com.ibay.backend.service;
 import com.ibay.backend.dao.UserDao;
 import com.ibay.backend.exceptions.generalExceptions.IdGenerationException;
 import com.ibay.backend.exceptions.userExceptions.EmailTakenException;
+import com.ibay.backend.exceptions.userExceptions.UserInvalidParametersException;
 import com.ibay.backend.exceptions.userExceptions.UsernameTakenException;
 import com.ibay.backend.model.User;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Map;
 
+import static com.ibay.backend.service.ServiceParamChecks.userConversionMap;
+
 
 @Service
 public class UserService {
@@ -28,9 +31,6 @@ public class UserService {
         this.userDao = userDao;
         this.idGenerator = idGenerator;
     }
-
-
-
 
     private String generateUniqueID() {
         String id;
@@ -54,6 +54,14 @@ public class UserService {
 
     public User getUserByID(String id) {
         return userDao.selectUserByID(id);
+    }
+
+    public User getUserByParam(Map<String, String> params) {
+
+        params = ServiceParamChecks.convertRequestParams(params, userConversionMap);
+        params = ServiceParamChecks.removeEmptyParams(params);
+        if (ServiceParamChecks.isParamsEmpty(params)) throw new UserInvalidParametersException("No valid parameters included");
+        return userDao.selectUserByParams(params);
     }
 
     public Boolean deleteUserByID(String id) {

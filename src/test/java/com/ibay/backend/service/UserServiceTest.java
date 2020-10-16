@@ -32,16 +32,14 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class UserServiceTest {
 
-    @MockBean
     public UserDao userDao;
-
-    @MockBean
-    IdGenerator idGenerator;
-
+    public IdGenerator idGenerator;
     public UserService userService;
 
     @BeforeAll
     void setUp() {
+        userDao = mock(UserDao.class);
+        idGenerator = mock(IdGenerator.class);
         this.userService = new UserService(userDao, idGenerator);
     }
 

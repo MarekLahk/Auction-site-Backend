@@ -4,16 +4,14 @@ import com.ibay.backend.MocksApplication;
 import com.ibay.backend.dao.AuctionDao;
 import com.ibay.backend.dao.BidDao;
 import com.ibay.backend.dao.UserDao;
-import com.ibay.backend.exceptions.pidExceptions.BidArgumentException;
-import com.ibay.backend.exceptions.pidExceptions.BidTooLowException;
+import com.ibay.backend.exceptions.bidExceptions.BidArgumentException;
+import com.ibay.backend.exceptions.bidExceptions.BidTooLowException;
 import com.ibay.backend.model.Auction;
 import com.ibay.backend.model.Bid;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -24,6 +22,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
@@ -35,18 +34,9 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 class BidServiceTest {
 
-    @MockBean
     public BidDao bidDao;
-
-    @MockBean
-    IdGenerator idGenerator;
-
-    @MockBean
-    AuctionDao auctionDao;
-
-    @MockBean
-    UserDao userDao;
-
+    public AuctionDao auctionDao;
+    public UserDao userDao;
     public BidService bidService;
 
     private UUID id = UUID.randomUUID();
@@ -56,26 +46,29 @@ class BidServiceTest {
     private Bid bidSameAmountDiffOwner = new Bid(null, "auctionID", "notOwnerID2", bid.getBidAmount());
     private Bid bidSameBidder = new Bid(null, "auctionID", "notOwnerID1", BigDecimal.valueOf(5));
     private Bid bidHigherDiffOwner = new Bid(null, "auctionID", "notOwnerID2", BigDecimal.valueOf(100));
-    private Auction auctionEnded = new Auction(null, null, null, "notOwnerID", null, new Timestamp(System.currentTimeMillis() - 500000));
-    private Auction auctionOngoing = new Auction(null, null, null, "ownerID", null, new Timestamp(System.currentTimeMillis() + 500000));
+    private Auction auctionEnded = new Auction(null, null, null, "notOwnerID", "category", null, new Timestamp(System.currentTimeMillis() - 500000));
+    private Auction auctionOngoing = new Auction(null, null, null, "ownerID", "category", null, new Timestamp(System.currentTimeMillis() + 500000));
 
     @BeforeAll
     void setUp() {
+        bidDao = mock(BidDao.class);
+        auctionDao = mock(AuctionDao.class);
+        userDao = mock(UserDao.class);
         this.bidService = new BidService(bidDao, auctionDao, userDao);
-
     }
     
 
     @Test
     @Order(1)
     void addBidIncorrectUser() {
-        when(userDao.columnContains(eq("ibay_user"), eq("userid"), any(String.class))).thenReturn(Boolean.FALSE).thenReturn(Boolean.TRUE);
         assertEquals("No such user exists", assertThrows(BidArgumentException.class, () -> bidService.addBid(bid)).getMessage());
     }
 
     @Test
     @Order(2)
     void addBidIncorrectAuction() {
+        when(userDao.columnContains(eq("ibay_user"), eq("userid"), any(String.class))).thenReturn(Boolean.TRUE);
+        System.out.println(userDao.columnContains("ibay_user", "userid", bid.getBidOwnerID()));
         when(auctionDao.selectAuctionByID(any(String.class))).thenReturn(null);
         assertEquals("No such auction found", assertThrows(BidArgumentException.class, () -> bidService.addBid(bid)).getMessage());
     }

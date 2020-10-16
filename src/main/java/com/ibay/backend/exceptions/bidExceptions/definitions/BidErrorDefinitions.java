@@ -1,4 +1,4 @@
-package com.ibay.backend.exceptions.pidExceptions.definitions;
+package com.ibay.backend.exceptions.bidExceptions.definitions;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

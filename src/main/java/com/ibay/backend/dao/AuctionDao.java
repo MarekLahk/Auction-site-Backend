@@ -18,5 +18,5 @@ public interface AuctionDao {
 
     Boolean updateAuctionByID(Auction auction);
 
-    List<Auction> selectAuctionsByParameter(Map<String, String> parameters);
+    List<Auction> selectAuctionsByParameter(Map<String, String> parameters, Integer limit);
 }

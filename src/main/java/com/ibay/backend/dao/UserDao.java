@@ -14,6 +14,8 @@ public interface UserDao {
 
     User selectUserByID(String id);
 
+    User selectUserByParams(Map<String, String> params);
+
     Boolean deleteUserByID(String id);
 
     Boolean updateUserByID(String id, Map<String, String> updateFields);

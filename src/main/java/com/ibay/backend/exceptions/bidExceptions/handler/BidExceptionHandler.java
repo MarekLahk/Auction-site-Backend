@@ -1,12 +1,10 @@
-package com.ibay.backend.exceptions.pidExceptions.handler;
+package com.ibay.backend.exceptions.bidExceptions.handler;
 
 import com.ibay.backend.exceptions.ExceptionBody;
-import com.ibay.backend.exceptions.pidExceptions.AuctionEndedException;
-import com.ibay.backend.exceptions.pidExceptions.BidArgumentException;
-import com.ibay.backend.exceptions.pidExceptions.BidTooLowException;
-import com.ibay.backend.exceptions.pidExceptions.definitions.BidErrorDefinitions;
-import com.ibay.backend.exceptions.userExceptions.UsernameTakenException;
-import com.ibay.backend.exceptions.userExceptions.definitions.UserErrorDefinitions;
+import com.ibay.backend.exceptions.bidExceptions.AuctionEndedException;
+import com.ibay.backend.exceptions.bidExceptions.BidArgumentException;
+import com.ibay.backend.exceptions.bidExceptions.BidTooLowException;
+import com.ibay.backend.exceptions.bidExceptions.definitions.BidErrorDefinitions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -5,6 +5,7 @@ CREATE TABLE auctions (
     description TEXT,
     createTime timestamp,
     endDateTime timestamp NOT NULL,
+    category VARCHAR NOT NULL,
 
     FOREIGN KEY (auctionOwner) REFERENCES ibay_user (userid)
 )

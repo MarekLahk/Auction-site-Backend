@@ -5,6 +5,7 @@ CREATE TABLE auctions (
     description TEXT,
     createTime timestamp,
     endDateTime timestamp NOT NULL,
+    category VARCHAR NOT NULL,
 
 
     constraint auctionIDAlphanumeric CHECK ( REGEXP_LIKE(auctionID ,'^[0-9a-zA-Z]{15}$')),

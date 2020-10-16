@@ -3,11 +3,10 @@ package com.ibay.backend.service;
 import com.ibay.backend.dao.AuctionDao;
 import com.ibay.backend.dao.BidDao;
 import com.ibay.backend.dao.UserDao;
-import com.ibay.backend.exceptions.pidExceptions.BidArgumentException;
-import com.ibay.backend.exceptions.pidExceptions.BidTooLowException;
+import com.ibay.backend.exceptions.bidExceptions.BidArgumentException;
+import com.ibay.backend.exceptions.bidExceptions.BidTooLowException;
 import com.ibay.backend.model.Auction;
 import com.ibay.backend.model.Bid;
-import com.ibay.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -34,6 +33,7 @@ public class BidService {
     private Boolean evaluateBid(Bid bid) {
         if (bid == null) return false;
         Boolean userExists = userDao.columnContains("ibay_user", "userid", bid.getBidOwnerID());
+        System.out.println(userExists);
         if (userExists == Boolean.FALSE) throw new BidArgumentException("No such user exists");
         Auction auction = auctionDao.selectAuctionByID(bid.getAuctionID());
         if (auction == null) throw new BidArgumentException("No such auction found");

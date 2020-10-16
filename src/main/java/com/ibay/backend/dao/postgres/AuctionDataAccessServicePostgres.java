@@ -36,10 +36,10 @@ public class AuctionDataAccessServicePostgres implements AuctionDao {
     @Override
     public String insertAuction(String id,  Auction auction) {
         final String sqlQuery = String.format("INSERT INTO auctions" +
-                        " (auctionID, auctionOwner, title, description, createTime, endDateTime)" +
-                        " VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
+                        " (auctionID, auctionOwner, title, description, createTime, endDateTime, category)" +
+                        " VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                 id, auction.getOwnerID(), auction.getTitle(), auction.getDescription(),
-                new Timestamp(System.currentTimeMillis()), auction.getEndTime());
+                new Timestamp(System.currentTimeMillis()), auction.getEndTime(), auction.getCategory());
         jdbcTemplate.update(sqlQuery);
         return id;
     }
@@ -68,10 +68,15 @@ public class AuctionDataAccessServicePostgres implements AuctionDao {
     }
 
     @Override
-    public List<Auction> selectAuctionsByParameter(Map<String, String> parameters) {
-        Map.Entry<String, String> param = parameters.entrySet().iterator().next();
-        System.out.println(param);
-        final String sqlQuery = String.format("SELECT * FROM auctions WHERE %s = '%s'", param.getKey(), param.getValue());
-        return jdbcTemplate.query(sqlQuery, new Auction());
+    public List<Auction> selectAuctionsByParameter(Map<String, String> parameters, Integer limit) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT * FROM auctions WHERE ");
+        String prefix = "";
+        for (String param : parameters.keySet()) {
+            sb.append(prefix).append(param).append("='").append(parameters.get(param)).append("' ");
+            prefix = ",";
+        }
+        sb.append("LIMIT ").append(limit);
+        return jdbcTemplate.query(sb.toString(), new Auction());
     }
 }

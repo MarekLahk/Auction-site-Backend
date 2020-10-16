@@ -1,4 +1,4 @@
-package com.ibay.backend.exceptions.pidExceptions;
+package com.ibay.backend.exceptions.bidExceptions;
 
 public class AuctionEndedException extends RuntimeException{
 

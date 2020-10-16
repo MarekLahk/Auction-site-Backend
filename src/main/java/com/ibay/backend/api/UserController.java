@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @RequestMapping("/api/v1/user")
 @RestController
@@ -25,13 +27,18 @@ public class UserController {
 
     @PostMapping
     public String addUser(@Valid @NotNull @RequestBody User user) {
-
+        System.out.println(user.getUsername());
         return userService.addUser(user);
     }
 
     @GetMapping(path = "{id}")
     public User getUserByID(@PathVariable("id") String id) {
         return userService.getUserByID(id);
+    }
+
+    @GetMapping
+    public User getUserByParam(@RequestParam LinkedHashMap<String, String> params) {
+        return userService.getUserByParam(params);
     }
 
     @DeleteMapping(path = "{id}")

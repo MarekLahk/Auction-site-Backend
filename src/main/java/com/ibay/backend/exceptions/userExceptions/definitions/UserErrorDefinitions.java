@@ -24,7 +24,15 @@ public enum UserErrorDefinitions {
          "Email is already in use",
          "",
          HttpStatus.CONFLICT
-    );
+    ),
+
+    BAD_ARGUMENTS(
+            "error/user/0003",
+            "Requst includes bad arguments",
+            "Request includes bad arguments",
+            HttpStatus.BAD_REQUEST
+    )
+    ;
 
 
     private final String errorCode;

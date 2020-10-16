@@ -1,10 +1,13 @@
 package com.ibay.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import org.springframework.jdbc.core.RowMapper;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -27,27 +30,32 @@ public class Auction implements RowMapper<Auction> {
 
     @Getter private Timestamp endTime;
 
+    @Getter private String category;
+
 
     public Auction(@JsonProperty("title") String title,
                    @JsonProperty("description") String description,
                    @JsonProperty("duration") Integer duration,
                    @JsonProperty("ownerID") String ownerID,
+                   @JsonProperty("category") String category,
                    List<String> imageURLList,
                    Timestamp endTime) {
         this.title = title;
         this.description = description;
         this.duration = duration;
         this.ownerID = ownerID;
+        this.category = category;
         this.imageURLList = imageURLList;
         this.endTime = endTime;
         calculateEndTime();
     }
 
-    public Auction(String title, String description, Integer duration, String ownerID, List<String> imageURLList, String endTime) {
+    public Auction(String title, String description, Integer duration, String ownerID, String category, List<String> imageURLList, String endTime) {
         this.title = title;
         this.description = description;
         this.duration = duration;
         this.ownerID = ownerID;
+        this.category = category;
         this.imageURLList = imageURLList;
         this.endTime = ConversionFunctions.parseTimestampString(endTime);
         calculateEndTime();
@@ -63,6 +71,7 @@ public class Auction implements RowMapper<Auction> {
                 rs.getString("description"),
                 null,
                 rs.getString("auctionOwner"),
+                rs.getString("category"),
                 null,
                 rs.getTimestamp("endDateTime")
         );

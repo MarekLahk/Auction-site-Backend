@@ -3,7 +3,6 @@ package com.ibay.backend.exceptions.generalExceptions.handler;
 import com.ibay.backend.exceptions.ExceptionBody;
 import com.ibay.backend.exceptions.generalExceptions.IdGenerationException;
 import com.ibay.backend.exceptions.generalExceptions.definitions.GeneralErrorDefinitions;
-import com.ibay.backend.exceptions.pidExceptions.AuctionEndedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

@@ -1,6 +1,7 @@
 package com.ibay.backend.dao.postgres;
 
 import com.ibay.backend.dao.UserDao;
+import com.ibay.backend.model.Auction;
 import com.ibay.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -47,6 +48,23 @@ public class UserDataAccessServicePostgres implements UserDao {
         final String sqlQuery = String.format("SELECT * FROM ibay_user WHERE userID = '%s'", id);
         try {
             return jdbcTemplate.queryForObject(sqlQuery, new User());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public User selectUserByParams(Map<String, String> params) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT * FROM IBAY_USER WHERE ");
+        String prefix = "";
+        System.out.println(params);
+        for (String param: params.keySet()) {
+            sb.append(prefix).append(param).append("='").append(params.get(param)).append("'");
+            prefix=",";
+        }
+        try {
+            return jdbcTemplate.queryForObject(sb.toString(), new User());
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
