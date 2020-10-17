@@ -12,6 +12,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Profile("production")
@@ -53,5 +55,20 @@ public class BidDataAccessServicePostgres implements BidDao {
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
+    }
+
+    @Override
+    public List<Bid> getBidByParams(Map<String, String> parameters, Integer offset, Integer limit) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT * FROM auction_bids WHERE ");
+        String prefix = "";
+        System.out.println(parameters);
+        for (String param : parameters.keySet()) {
+            sb.append(prefix).append(param).append("='").append(parameters.get(param)).append("' ");
+            prefix = " and ";
+        }
+        sb.append("ORDER BY BIDDATETIME DESC ").append("OFFSET ").append(offset).append(" ROWS ");
+        sb.append("FETCH FIRST ").append(limit).append(" ROWS ONLY");
+        return jdbcTemplate.query(sb.toString(), new Bid());
     }
 }

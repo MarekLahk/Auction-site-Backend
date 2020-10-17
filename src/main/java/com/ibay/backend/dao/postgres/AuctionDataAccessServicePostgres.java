@@ -68,15 +68,16 @@ public class AuctionDataAccessServicePostgres implements AuctionDao {
     }
 
     @Override
-    public List<Auction> selectAuctionsByParameter(Map<String, String> parameters, Integer limit) {
+    public List<Auction> selectAuctionsByParameter(Map<String, String> parameters, Integer limit, Integer offset) {
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT * FROM auctions WHERE ");
-        String prefix = "";
+        sb.append("ENDDATETIME>'").append(new Timestamp(System.currentTimeMillis())).append("' ");
         for (String param : parameters.keySet()) {
-            sb.append(prefix).append(param).append("='").append(parameters.get(param)).append("' ");
-            prefix = ",";
+            sb.append(" and ").append(param).append("='").append(parameters.get(param)).append("' ");
         }
-        sb.append("LIMIT ").append(limit);
+
+        sb.append("ORDER BY ENDDATETIME ").append("OFFSET ").append(offset).append(" ROWS ");
+        sb.append("FETCH FIRST ").append(limit).append(" ROWS ONLY");
         return jdbcTemplate.query(sb.toString(), new Auction());
     }
 }

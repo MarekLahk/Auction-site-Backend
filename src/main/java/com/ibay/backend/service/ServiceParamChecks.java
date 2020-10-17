@@ -10,16 +10,24 @@ public class ServiceParamChecks {
 
 
     public static final Map<String, String> auctionConversionMap = Map.ofEntries(
-            Map.entry("id", "auctionID"),
+            Map.entry("id", "auctionid"),
             Map.entry("ownerid", "auctionOwner"),
             Map.entry("title", "title"),
             Map.entry("description", "description"),
             Map.entry("category", "category"),
-            Map.entry("limit", "limit")
+            Map.entry("limit", "limit"),
+            Map.entry("offset", "offset")
     );
 
     public static final Map<String, String> userConversionMap = Map.ofEntries(
-            Map.entry("username", "username")
+            Map.entry("username", "username"),
+            Map.entry("email", "email")
+    );
+
+    public static final Map<String, String> bidConversionMap = Map.ofEntries(
+            Map.entry("limit", "limit"),
+            Map.entry("auctionid", "bidauctionid"),
+            Map.entry("offset", "offset")
     );
 
 
@@ -66,4 +74,20 @@ public class ServiceParamChecks {
             }
         } return maxResponse;
     }
+
+    public static Integer getRequestOffset(Map<String, String> params) {
+        if (params.containsKey("offset")) {
+            String offsetString = params.get("offset");
+            params.remove("offset");
+            try {
+                int offset = Integer.parseInt(offsetString);
+                if (offset <= 0) return 0;
+                return offset;
+            } catch (NumberFormatException e) {
+                return 0;
+            }
+        }
+        return 0;
+    }
+
 }

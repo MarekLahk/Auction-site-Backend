@@ -83,7 +83,7 @@ public class UserDataAccessServicePostgres implements UserDao {
         String prefix = "";
         for (String key : updateFields.keySet()) {
             sb.append(prefix).append(key).append("='").append(updateFields.get(key)).append("'");
-            prefix=",";
+            prefix=" and ";
         }
         sb.append(" WHERE userid = '").append(id).append("'");
         return jdbcTemplate.update(sb.toString()) > 0? Boolean.TRUE : Boolean.FALSE;

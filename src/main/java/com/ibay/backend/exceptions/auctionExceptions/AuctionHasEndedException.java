@@ -1,4 +1,6 @@
 package com.ibay.backend.exceptions.auctionExceptions;
 
-public class AuctionHasEndedException {
+public class AuctionHasEndedException extends RuntimeException {
+    public AuctionHasEndedException() {
+    }
 }
