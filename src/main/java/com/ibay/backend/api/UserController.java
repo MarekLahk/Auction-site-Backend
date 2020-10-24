@@ -1,6 +1,5 @@
 package com.ibay.backend.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibay.backend.model.User;
 import com.ibay.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +7,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.Map;
 
 @RequestMapping("/api/v1/user")
 @RestController
 public class UserController {
 
     private final UserService userService;
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     public UserController(UserService userService) {
@@ -22,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping
-    public Boolean addUser(@Valid @NotNull @RequestBody User user) {
+    public String addUser(@Valid @NotNull @RequestBody User user) {
         return userService.addUser(user);
     }
 
@@ -31,8 +30,12 @@ public class UserController {
         return userService.getUserByID(id);
     }
 
-    @DeleteMapping(path = "{id}")
-    public Boolean deleteUserByID(@PathVariable("id") String id) {
+    @GetMapping
+    public User getUserByParam(@RequestParam Map<String, String> params) {
+        return userService.getUserByParam(params);
+    }
+
+    public Boolean deleteUserByID(String id) {
         return userService.deleteUserByID(id);
     }
 

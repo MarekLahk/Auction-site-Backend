@@ -1,0 +1,11 @@
+postgres:
+  ports:
+    - '5436:5432'
+  restart: always
+  image: postgres:13.0-alpine
+  environment:
+    POSTGRES_DB: IbayDB
+    POSTGRES_USER: ibay_user
+    POSTGRES_PASSWORD: 123456
+  volumes:
+    - ./postgres-initdb.sh:/docker-entrypoint-initdb.d/init.sh

@@ -2,6 +2,7 @@ package com.ibay.backend.exceptions.userExceptions.handler;
 
 import com.ibay.backend.exceptions.ExceptionBody;
 import com.ibay.backend.exceptions.userExceptions.EmailTakenException;
+import com.ibay.backend.exceptions.userExceptions.UserInvalidParametersException;
 import com.ibay.backend.exceptions.userExceptions.UsernameTakenException;
 import com.ibay.backend.exceptions.userExceptions.definitions.UserErrorDefinitions;
 import org.springframework.http.HttpStatus;
@@ -26,5 +27,12 @@ public class UserExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     ExceptionBody emailTakenExceptionHandler(EmailTakenException exception) {
         return new ExceptionBody(UserErrorDefinitions.EMAIL_TAKEN);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(UserInvalidParametersException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ExceptionBody userInvalidParametersExceptionHandler(UserInvalidParametersException exception) {
+        return new ExceptionBody(UserErrorDefinitions.BAD_ARGUMENTS, exception.getMessage());
     }
 }

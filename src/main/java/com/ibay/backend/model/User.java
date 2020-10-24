@@ -1,33 +1,28 @@
 package com.ibay.backend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
-import org.apache.tomcat.jni.Time;
+import org.springframework.jdbc.core.RowMapper;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-public class User {
+public class User implements RowMapper<User> {
 
-    @Getter private final String id;
+    @Getter private String id;
 
+    @Getter private String username;
 
-    @Getter private final String username;
+    @Getter private String email;
 
+    @Getter private String full_name;
 
-    @Getter private final String email;
-
-
-    @Getter private final String full_name;
-
-    @Getter private final Timestamp registrationDate;
+    @Getter private Timestamp registrationDate;
 
     public User(@JsonProperty("id") String id,
                 @JsonProperty("username") String username,
@@ -42,30 +37,41 @@ public class User {
         this.registrationDate = registrationDate;
     }
 
-    public User(String id,
-                String username,
-                String email,
-                String full_name,
-                String registrationDate)
-    {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.full_name = full_name;
-        this.registrationDate = parseTimestampString(registrationDate);
+
+    public User() {
     }
 
-    private static Timestamp parseTimestampString(String timestampString) {
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-            Date parsedDate = dateFormat.parse(timestampString);
-            return new Timestamp(parsedDate.getTime());
-        } catch (ParseException e) {
-            return null;
-        }
+    private boolean isEmpty(String string) {
+        return (string == null || string.strip().isEmpty());
+    }
+
+    @JsonIgnore
+    public Map<String, String> getUpdateFields() {
+        Map<String, String> output = new HashMap<>();
+
+        if (!isEmpty(this.full_name)) output.put("full_name", this.getFull_name());
+        if (!isEmpty(this.email)) output.put("email", this.email);
+        if (!isEmpty(this.username)) output.put("username", this.username);
+
+        return output;
     }
 
 
+    @Override
+    public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+        return new User(
+                rs.getString("userID"),
+                rs.getString("username"),
+                rs.getString("email"),
+                rs.getString("full_name"),
+                rs.getTimestamp("registration_date")
+        );
+    }
 
+
+    @JsonIgnore
+    public String toTestString() {
+        return id+username+email+full_name;
+    }
 
 }

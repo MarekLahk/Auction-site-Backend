@@ -1,0 +1,25 @@
+app:
+  datasource:
+    jdbcUrl: jdbc:h2:file:./src/main/resources/H2DB/TestTB;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  flyway:
+    locations: classpath:/db/migration/h2
+    schemas: PUBLIC
+  profiles:
+    active: "test"
+  h2:
+    console:
+      enabled: true
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: default
+
