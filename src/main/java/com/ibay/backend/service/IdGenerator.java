@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-@Profile({"!test"})
 public class IdGenerator {
 
     public IdGenerator idGenerator() {
@@ -14,10 +13,6 @@ public class IdGenerator {
     }
 
     public String generateStringID(int length) {
-        if (length > 0) {
             return RandomStringUtils.randomAlphanumeric(length);
-        } else {
-            return null;
-        }
     }
 }

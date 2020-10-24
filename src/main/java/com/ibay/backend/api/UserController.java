@@ -27,7 +27,6 @@ public class UserController {
 
     @PostMapping
     public String addUser(@Valid @NotNull @RequestBody User user) {
-        System.out.println(user.getUsername());
         return userService.addUser(user);
     }
 
@@ -37,12 +36,12 @@ public class UserController {
     }
 
     @GetMapping
-    public User getUserByParam(@RequestParam LinkedHashMap<String, String> params) {
+    public User getUserByParam(@RequestParam Map<String, String> params) {
         return userService.getUserByParam(params);
     }
 
-    @DeleteMapping(path = "{id}")
-    public Boolean deleteUserByID(@PathVariable("id") String id) {
+
+    public Boolean deleteUserByID(String id) {
         return userService.deleteUserByID(id);
     }
 

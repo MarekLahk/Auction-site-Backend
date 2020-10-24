@@ -15,6 +15,9 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,6 +51,24 @@ class BidDataAccessServiceTest {
         System.out.println(bid.getBidAmount().toString());
         assertEquals(bid.toTestString(), bidDao.getBidByID(UUID.fromString("bd2bb7a3-a575-4fa0-8f36-7205a8209e3c")).toTestString());
 
+    }
+
+    @Test
+    void getHighestBid() {
+        Bid bid = new Bid(UUID.fromString("bd2bb7a3-a575-4fa0-8f36-7205a8209e3e"), "BidAuction00001", "BidUser00002", BigDecimal.valueOf(200.00f));
+        assertEquals(bid.toTestString(), bidDao.getHighestBid("BidAuction00001").toTestString());
+        assertNull(bidDao.getHighestBid("wrongID"));
+    }
+
+    @Test
+    void getBidByParams() {
+        Map<String, String> params = new HashMap<>();
+        params.put("bidauctionid", "BidAuction00001" );
+        List<Bid> output = bidDao.getBidByParams(params, 0, 2);
+        assertEquals(2, output.size());
+        params.put("bidauctionid", "invalidID");
+        output = bidDao.getBidByParams(params, 0, 2);
+        assertEquals(0, output.size());
     }
 
 }

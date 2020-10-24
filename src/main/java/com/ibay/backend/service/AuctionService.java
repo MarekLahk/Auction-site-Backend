@@ -21,15 +21,13 @@ import static com.ibay.backend.service.ServiceParamChecks.*;
 public class AuctionService {
 
     private final AuctionDao auctionDao;
-    private final BidDao bidDao;
     private final IdGenerator idGenerator;
     private final UserDao userDao;
 
     @Autowired
-    public AuctionService(AuctionDao auctionDao, BidDao bidDao, UserDao userDao, IdGenerator idGenerator) {
+    public AuctionService(AuctionDao auctionDao, UserDao userDao, IdGenerator idGenerator) {
 
         this.auctionDao = auctionDao;
-        this.bidDao = bidDao;
         this.userDao = userDao;
         this.idGenerator = idGenerator;
     }
@@ -37,7 +35,7 @@ public class AuctionService {
     private Boolean evaluateAuction(Auction auction) {
         if (auction == null) throw new AuctionArgumentException("No auction provided");
         if (!userDao.columnContains("ibay_user", "userid", auction.getOwnerID())) throw new AuctionArgumentException("No such user exists");
-        if (auction.getDuration() < 1 && auction.getDuration() > 20) throw new AuctionArgumentException("Invalid duration. Duration must be between 1 day and 20 days");
+        if (auction.getDuration() < 1 || auction.getDuration() > 20) throw new AuctionArgumentException("Invalid duration. Duration must be between 1 day and 20 days");
         if (!AuctionCategoryDefinitions.auctionCategories.contains(auction.getCategory()) || auction.getCategory().equals("all")) throw new AuctionArgumentException("No such category");
         return Boolean.TRUE;
     }
@@ -45,7 +43,7 @@ public class AuctionService {
     public String addAuction(Auction auction) {
         if (evaluateAuction(auction)) {
             auction.calculateEndTime();
-            return auctionDao.insertAuction(RandomStringUtils.randomAlphanumeric(15), auction);
+            return auctionDao.insertAuction(idGenerator.generateStringID(15), auction);
         }
         return null;
     }
@@ -58,9 +56,6 @@ public class AuctionService {
         return auctionDao.deleteAuctionByID(id);
     }
 
-    public Boolean updateAuctionByID(Auction auction) {
-        return auctionDao.updateAuctionByID(auction);
-    }
 
     public List<Auction> selectAuctionsByParameter(Map<String, String> parameters) {
         parameters = ServiceParamChecks.convertRequestParams(parameters, auctionConversionMap);
@@ -71,10 +66,6 @@ public class AuctionService {
         if (parameters.containsKey("category") && parameters.get("category").equals("all")) parameters.remove("category");
         return auctionDao.selectAuctionsByParameter(parameters, limit, offset);
 
-    }
-
-    public Bid getAuctionHighestBid(String id) {
-        return bidDao.getHighestBid(id);
     }
 
 }

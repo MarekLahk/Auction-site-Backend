@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Primary;
 
 
 @Configuration
-public class PostgresDatasource {
+public class Datasource {
 
     @Bean
     @ConfigurationProperties("app.datasource")

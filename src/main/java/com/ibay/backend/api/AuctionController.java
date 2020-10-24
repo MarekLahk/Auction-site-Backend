@@ -36,23 +36,14 @@ public class AuctionController {
         return auctionService.selectAuctionByID(id);
     }
 
-    @DeleteMapping(path = "{id}")
+
     public Boolean deleteAuctionByID(@PathVariable("id") String id) {
         return auctionService.deleteAuctionByID(id);
     }
 
-    @PutMapping
-    public Boolean updateAuctionByID(String id, Auction auction) {
-        return auctionService.updateAuctionByID(auction);
-    }
-
     @GetMapping()
-    public List<Auction> getAuctionsByParameter(@RequestParam @NotBlank LinkedHashMap<String, String> parameters) {
+    public List<Auction> getAuctionsByParameter(@RequestParam @NotBlank Map<String, String> parameters) {
         return auctionService.selectAuctionsByParameter(parameters);
     }
 
-    @GetMapping(path = "{id}/highest")
-    public Bid getAuctionHighestBid(@PathVariable("id") String id) {
-        return auctionService.getAuctionHighestBid(id);
-    }
 }

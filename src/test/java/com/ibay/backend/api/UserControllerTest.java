@@ -19,6 +19,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.sql.Timestamp;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -72,5 +75,21 @@ public class UserControllerTest {
         when(userService.updateUserByID("wrongID", updateUser)).thenReturn(Boolean.FALSE);
         assertEquals(userController.updateUserByID("id", updateUser), Boolean.TRUE);
         assertEquals(userController.updateUserByID("wrongID", updateUser), Boolean.FALSE);
+    }
+
+    @Test
+    void getUserByParam() {
+        Map<String, String> params = Map.ofEntries(
+                Map.entry("username", "hello world")
+        );
+        when(userService.getUserByParam(params)).thenReturn(user);
+        assertEquals(user, userController.getUserByParam(params));
+    }
+
+    @Test
+    void testDeleteUserByID() {
+        when(userService.deleteUserByID("userID")).thenReturn(Boolean.TRUE).thenReturn(Boolean.FALSE);
+        assertTrue(userController.deleteUserByID("userID"));
+        assertFalse(userController.deleteUserByID("userID"));
     }
 }

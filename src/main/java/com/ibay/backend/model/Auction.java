@@ -18,6 +18,8 @@ import java.util.concurrent.TimeUnit;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Auction implements RowMapper<Auction> {
 
+    @Getter private String id;
+
     @Getter private String title;
 
     @Getter private String description;
@@ -33,13 +35,15 @@ public class Auction implements RowMapper<Auction> {
     @Getter private String category;
 
 
-    public Auction(@JsonProperty("title") String title,
+    public Auction(String id,
+                   @JsonProperty("title") String title,
                    @JsonProperty("description") String description,
                    @JsonProperty("duration") Integer duration,
                    @JsonProperty("ownerID") String ownerID,
                    @JsonProperty("category") String category,
                    List<String> imageURLList,
                    Timestamp endTime) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.duration = duration;
@@ -50,7 +54,8 @@ public class Auction implements RowMapper<Auction> {
         calculateEndTime();
     }
 
-    public Auction(String title, String description, Integer duration, String ownerID, String category, List<String> imageURLList, String endTime) {
+    public Auction(String id, String title, String description, Integer duration, String ownerID, String category, List<String> imageURLList, String endTime) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.duration = duration;
@@ -67,6 +72,7 @@ public class Auction implements RowMapper<Auction> {
     @Override
     public Auction mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new Auction(
+                rs.getString("auctionid"),
                 rs.getString("title"),
                 rs.getString("description"),
                 null,

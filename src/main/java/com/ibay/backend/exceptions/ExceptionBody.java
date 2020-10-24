@@ -13,12 +13,6 @@ public class ExceptionBody{
     @Getter private final String devMessage;
     @Getter private final int status;
 
-    public ExceptionBody(String errorCode, String userMessage, String devMessage, int status) {
-        this.errorCode = errorCode;
-        this.userMessage = userMessage;
-        this.devMessage = devMessage;
-        this.status = status;
-    }
 
     public ExceptionBody(UserErrorDefinitions definition) {
         this.errorCode = definition.getErrorCode();

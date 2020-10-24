@@ -8,7 +8,4 @@ public class AuctionArgumentException extends RuntimeException{
         super(message);
     }
 
-    public AuctionArgumentException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

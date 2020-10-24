@@ -3,6 +3,7 @@ package com.ibay.backend.service;
 import com.ibay.backend.dao.AuctionDao;
 import com.ibay.backend.dao.BidDao;
 import com.ibay.backend.dao.UserDao;
+import com.ibay.backend.exceptions.bidExceptions.AuctionEndedException;
 import com.ibay.backend.exceptions.bidExceptions.BidArgumentException;
 import com.ibay.backend.exceptions.bidExceptions.BidTooLowException;
 import com.ibay.backend.model.Auction;
@@ -42,7 +43,7 @@ public class BidService {
         if (userExists == Boolean.FALSE) throw new BidArgumentException("No such user exists");
         Auction auction = auctionDao.selectAuctionByID(bid.getAuctionID());
         if (auction == null) throw new BidArgumentException("No such auction found");
-        if (auction.getEndTime().before(new Timestamp(System.currentTimeMillis()))) throw new BidArgumentException("Auction has ended");
+        if (auction.getEndTime().before(new Timestamp(System.currentTimeMillis()))) throw new AuctionEndedException();
         if (auction.getOwnerID().equals(bid.getBidOwnerID())) throw new BidArgumentException("Auction owner cannot bid on their own auction");
         Bid highestBid = bidDao.getHighestBid(bid.getAuctionID());
         if (highestBid == null) return Boolean.TRUE;
@@ -59,9 +60,6 @@ public class BidService {
         return null;
     }
 
-    public Bid getHighestBid(String auctionID) {
-        return bidDao.getHighestBid(auctionID);
-    }
 
     public Bid getBidByID(UUID id) {
         return bidDao.getBidByID(id);

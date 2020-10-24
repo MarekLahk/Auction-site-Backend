@@ -4,6 +4,7 @@ import com.ibay.backend.MocksApplication;
 import com.ibay.backend.dao.AuctionDao;
 import com.ibay.backend.dao.BidDao;
 import com.ibay.backend.dao.UserDao;
+import com.ibay.backend.exceptions.bidExceptions.AuctionEndedException;
 import com.ibay.backend.exceptions.bidExceptions.BidArgumentException;
 import com.ibay.backend.exceptions.bidExceptions.BidTooLowException;
 import com.ibay.backend.model.Auction;
@@ -27,8 +28,8 @@ import static org.mockito.Mockito.when;
 
 
 @ActiveProfiles("test")
-@ExtendWith(MockitoExtension.class)
 @ContextConfiguration(classes = {MocksApplication.class})
+@ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
@@ -46,8 +47,8 @@ class BidServiceTest {
     private Bid bidSameAmountDiffOwner = new Bid(null, "auctionID", "notOwnerID2", bid.getBidAmount());
     private Bid bidSameBidder = new Bid(null, "auctionID", "notOwnerID1", BigDecimal.valueOf(5));
     private Bid bidHigherDiffOwner = new Bid(null, "auctionID", "notOwnerID2", BigDecimal.valueOf(100));
-    private Auction auctionEnded = new Auction(null, null, null, "notOwnerID", "category", null, new Timestamp(System.currentTimeMillis() - 500000));
-    private Auction auctionOngoing = new Auction(null, null, null, "ownerID", "category", null, new Timestamp(System.currentTimeMillis() + 500000));
+    private Auction auctionEnded = new Auction("id",null, null, null, "notOwnerID", "category", null, new Timestamp(System.currentTimeMillis() - 500000));
+    private Auction auctionOngoing = new Auction("id",null, null, null, "ownerID", "category", null, new Timestamp(System.currentTimeMillis() + 500000));
 
     @BeforeAll
     void setUp() {
@@ -77,7 +78,7 @@ class BidServiceTest {
     @Order(3)
     void addBidIncorrectAuctionEndTime() {
         when(auctionDao.selectAuctionByID(bid.getAuctionID())).thenReturn(auctionEnded).thenReturn(auctionOngoing);
-        assertEquals("Auction has ended", assertThrows(BidArgumentException.class, () -> bidService.addBid(bid)).getMessage());
+        assertThrows(AuctionEndedException.class, () -> bidService.addBid(bid));
     }
 
     @Test
@@ -117,13 +118,6 @@ class BidServiceTest {
     }
 
 
-    @Test
-    @Order(9)
-    void getHighestBid() {
-        when(bidDao.getHighestBid(bid.getAuctionID())).thenReturn(bid).thenReturn(null);
-        assertEquals(bid, bidService.getHighestBid(bid.getAuctionID()));
-        assertNull(bidDao.getHighestBid(bid.getAuctionID()));
-    }
 
     @Test
     void getBidByID() {

@@ -62,12 +62,6 @@ public class AuctionDataAccessServicePostgres implements AuctionDao {
     }
 
     @Override
-    public Boolean updateAuctionByID(Auction auction) {
-        //TODO Add update functionality
-        return null;
-    }
-
-    @Override
     public List<Auction> selectAuctionsByParameter(Map<String, String> parameters, Integer limit, Integer offset) {
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT * FROM auctions WHERE ");
