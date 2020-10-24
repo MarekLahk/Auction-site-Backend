@@ -6,12 +6,7 @@ import com.ibay.backend.exceptions.userExceptions.EmailTakenException;
 import com.ibay.backend.exceptions.userExceptions.UserInvalidParametersException;
 import com.ibay.backend.exceptions.userExceptions.UsernameTakenException;
 import com.ibay.backend.model.User;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Conditional;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;

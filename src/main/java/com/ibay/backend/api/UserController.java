@@ -1,6 +1,5 @@
 package com.ibay.backend.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibay.backend.model.User;
 import com.ibay.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RequestMapping("/api/v1/user")
@@ -39,7 +34,6 @@ public class UserController {
     public User getUserByParam(@RequestParam Map<String, String> params) {
         return userService.getUserByParam(params);
     }
-
 
     public Boolean deleteUserByID(String id) {
         return userService.deleteUserByID(id);

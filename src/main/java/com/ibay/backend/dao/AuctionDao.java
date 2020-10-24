@@ -2,7 +2,6 @@ package com.ibay.backend.dao;
 
 import com.ibay.backend.model.Auction;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 

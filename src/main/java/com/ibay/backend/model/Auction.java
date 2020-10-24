@@ -1,13 +1,10 @@
 package com.ibay.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import org.springframework.jdbc.core.RowMapper;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -92,7 +89,9 @@ public class Auction implements RowMapper<Auction> {
         return false;
     }
 
-
+    public String toTestString() {
+        return(id + title + description + ownerID + category);
+    }
 
 
 }

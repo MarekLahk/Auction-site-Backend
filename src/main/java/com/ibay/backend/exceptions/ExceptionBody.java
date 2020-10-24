@@ -1,8 +1,8 @@
 package com.ibay.backend.exceptions;
 
 import com.ibay.backend.exceptions.auctionExceptions.definitions.AuctionErrorDefinitions;
-import com.ibay.backend.exceptions.generalExceptions.definitions.GeneralErrorDefinitions;
 import com.ibay.backend.exceptions.bidExceptions.definitions.BidErrorDefinitions;
+import com.ibay.backend.exceptions.generalExceptions.definitions.GeneralErrorDefinitions;
 import com.ibay.backend.exceptions.userExceptions.definitions.UserErrorDefinitions;
 import lombok.Getter;
 

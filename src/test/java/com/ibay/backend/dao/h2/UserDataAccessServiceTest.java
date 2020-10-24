@@ -1,7 +1,6 @@
 package com.ibay.backend.dao.h2;
 
 import com.ibay.backend.MocksApplication;
-import com.ibay.backend.dao.h2.UserDataAccessServiceH2;
 import com.ibay.backend.model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

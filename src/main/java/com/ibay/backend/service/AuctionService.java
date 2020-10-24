@@ -1,12 +1,9 @@
 package com.ibay.backend.service;
 
 import com.ibay.backend.dao.AuctionDao;
-import com.ibay.backend.dao.BidDao;
 import com.ibay.backend.dao.UserDao;
 import com.ibay.backend.exceptions.auctionExceptions.AuctionArgumentException;
 import com.ibay.backend.model.Auction;
-import com.ibay.backend.model.Bid;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;

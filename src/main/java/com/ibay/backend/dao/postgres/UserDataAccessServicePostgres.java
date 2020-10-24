@@ -1,7 +1,6 @@
 package com.ibay.backend.dao.postgres;
 
 import com.ibay.backend.dao.UserDao;
-import com.ibay.backend.model.Auction;
 import com.ibay.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;

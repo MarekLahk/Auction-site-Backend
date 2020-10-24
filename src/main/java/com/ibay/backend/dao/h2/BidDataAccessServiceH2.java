@@ -1,7 +1,6 @@
 package com.ibay.backend.dao.h2;
 
 
-import com.ibay.backend.dao.BidDao;
 import com.ibay.backend.dao.postgres.BidDataAccessServicePostgres;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;

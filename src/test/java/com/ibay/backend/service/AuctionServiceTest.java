@@ -5,13 +5,10 @@ import com.ibay.backend.dao.AuctionDao;
 import com.ibay.backend.dao.UserDao;
 import com.ibay.backend.exceptions.auctionExceptions.AuctionArgumentException;
 import com.ibay.backend.model.Auction;
-import com.ibay.backend.model.User;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -20,7 +17,8 @@ import org.springframework.test.context.ContextConfiguration;
 import java.sql.Timestamp;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
@@ -80,6 +78,7 @@ class AuctionServiceTest {
 
     @Test
     void selectAuctionsByParameter() {
+        //TODO add tests
     }
 
 }

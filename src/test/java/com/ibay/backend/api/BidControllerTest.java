@@ -2,26 +2,23 @@ package com.ibay.backend.api;
 
 import com.ibay.backend.MocksApplication;
 import com.ibay.backend.model.Bid;
-import com.ibay.backend.service.AuctionService;
 import com.ibay.backend.service.BidService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.math.BigDecimal;
-import java.util.UUID;
+import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 @ActiveProfiles("test")
@@ -56,6 +53,18 @@ class BidControllerTest {
         when(bidService.getBidByID(uuid)).thenReturn(null);
         assertEquals(bid, bidController.getBidByID(bid.getBidID()));
         assertNull(bidController.getBidByID(uuid));
+
+    }
+
+    @Test
+    void getBidByParam() {
+        Bid bid = new Bid(UUID.randomUUID(), "auctionID", "ownerID", BigDecimal.valueOf(10));
+        Map<String, String> params = new HashMap<>();
+        params.put("ownerID", "ownerID");
+        List<Bid> bidList = new LinkedList<>();
+        bidList.add(bid);
+        when(bidService.getBidByParams(params)).thenReturn(bidList);
+        assertEquals(bidList, bidController.getBidByParam(params));
 
     }
 }

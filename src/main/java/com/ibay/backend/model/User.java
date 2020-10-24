@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,18 +37,6 @@ public class User implements RowMapper<User> {
         this.registrationDate = registrationDate;
     }
 
-    public User(String id,
-                String username,
-                String email,
-                String full_name,
-                String registrationDate)
-    {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.full_name = full_name;
-        this.registrationDate = ConversionFunctions.parseTimestampString(registrationDate);
-    }
 
     public User() {
     }

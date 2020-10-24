@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RequestMapping("/api/v1/bid")
@@ -32,7 +32,7 @@ public class BidController {
     }
 
     @GetMapping
-    public List<Bid> getBidByParam(@RequestParam @NotNull LinkedHashMap<String, String> params) {
+    public List<Bid> getBidByParam(@RequestParam @NotNull Map<String, String> params) {
         return bidService.getBidByParams(params);
     }
 
