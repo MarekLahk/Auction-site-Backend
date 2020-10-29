@@ -17,7 +17,8 @@ build backend:
   tags:
     - IbayRunner
   script:
-    - chmod +x ./gradlew assemble
+    - chmod +x gradlew
+    - ./gradlew assemble
 
 test backend:
   stage: test
