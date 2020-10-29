@@ -4,6 +4,7 @@ stages:
 
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
+  - chmod +x gradlew
 
 build backend:
   stage: build
@@ -17,7 +18,6 @@ build backend:
   tags:
     - IbayRunner
   script:
-    - chmod +x gradlew
     - ./gradlew assemble
 
 test backend:
