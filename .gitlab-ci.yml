@@ -1,0 +1,27 @@
+stages:
+  - build
+  - test
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+build backend:
+  stage: build
+  cache:
+    paths:
+      - .gradle/wrapper
+      - .gradle/caches
+  artifacts:
+    paths:
+      - build/libs
+  tags:
+    - IbayRunner
+  script:
+    - ./gradlew assemble
+
+test backend:
+  stage: test
+  tags:
+    - IbayRunner
+  script:
+    - ./gradlew check
