@@ -2,7 +2,7 @@ app:
   datasource:
     jdbcUrl: jdbc:postgresql://docker.for.win.localhost:5436/postgres
     driver-class-name: org.postgresql.Driver
-    username: ibay_user
+    username: postgres
     password: admin
 
 
