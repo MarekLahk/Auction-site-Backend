@@ -1,6 +1,6 @@
 app:
   datasource:
-    jdbcUrl: jdbc:postgresql://docker.for.win.localhost:5436/postgres
+    jdbcUrl: jdbc:postgresql://localhost:5436/postgres
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: admin
