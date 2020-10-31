@@ -6,6 +6,7 @@ stages:
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
   - chmod +x gradlew
+  - chmod +x docker
 
 build backend:
   stage: build
@@ -20,7 +21,7 @@ build backend:
     - IbayRunner
   script:
     - ./gradlew assemble
-    - sudo docker build --build-arg JAR_FILE=build/libs/*.jar -t ibay/backend .
+    - docker build --build-arg JAR_FILE=build/libs/*.jar -t ibay/backend .
 
 test backend:
   stage: test
