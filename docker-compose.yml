@@ -1,11 +1,33 @@
-postgres:
-  ports:
-    - '5436:5432'
-  restart: always
-  image: postgres:13.0-alpine
-  environment:
-    POSTGRES_DB: IbayDB
-    POSTGRES_USER: ibay_user
-    POSTGRES_PASSWORD: 123456
-  volumes:
-    - ./postgres-initdb.sh:/docker-entrypoint-initdb.d/init.sh
+version: "3"
+services:
+  postgres:
+    image: postgres:13.0-alpine
+    network_mode: bridge
+    container_name: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=testdb
+    restart: unless-stopped
+  # APP*****************************************
+  springbootapp:
+    image: ibay/backend:latest
+    network_mode: bridge
+    container_name: IbayBackend
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    links:
+      - postgres
+volumes:
+  postgres-data:
