@@ -22,12 +22,12 @@ build backend:
     - ./gradlew assemble
     - sudo docker build --build-arg JAR_FILE=build/libs/*.jar -t ibay/backend .
 
-test backend:
-  stage: test
-  tags:
-    - IbayRunner
-  script:
-    - ./gradlew check
+#test backend:
+#  stage: test
+#  tags:
+#    - IbayRunner
+#  script:
+#    - ./gradlew check
 
 deploy backend:
   stage: deploy
