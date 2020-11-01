@@ -39,7 +39,7 @@ deploy backend:
   script:
     - sudo docker ps -q --filter "name=IbayBackend" | grep -q . && sudo docker stop IbayBackend && sudo docker rm IbayBackend
     - sudo docker ps -q --filter "name=postgres" | grep -q . && sudo docker stop postgres && sudo docker rm postgres
-    - sudo docker-compose -d up
+    - sudo docker-compose up -d
     - sudo docker container update --restart unless-stopped IbayBackend
 #    - mkdir -p ~/api-deployment # mkdir make folder api-deployment ~/ is under current user directory so for gitlab it would be /home/gitlab/api-deployment
 #    - rm -rf ~/api-deployment/* # rm remove -rf is recursive files from api-deployment
