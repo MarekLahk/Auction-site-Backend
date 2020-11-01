@@ -2,8 +2,8 @@ app:
   datasource:
     jdbcUrl: jdbc:postgresql://postgres:5436/abc
     driver-class-name: org.postgresql.Driver
-    username: postgres
-    password: admin
+    username: abc
+    password: abc
 
 
 spring:
