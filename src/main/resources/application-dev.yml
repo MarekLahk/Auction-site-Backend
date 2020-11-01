@@ -1,5 +1,3 @@
-
-
 app:
   datasource:
     jdbcUrl: jdbc:h2:file:./src/main/resources/H2DB/DevDB;AUTO_SERVER=TRUE
