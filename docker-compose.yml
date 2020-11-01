@@ -10,9 +10,9 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_PASSWORD=abc
-      - POSTGRES_USER=abc
-      - POSTGRES_DB=abc
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
     restart: unless-stopped
   # APP*****************************************
   springbootapp:
