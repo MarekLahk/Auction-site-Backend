@@ -1,6 +1,6 @@
 app:
   datasource:
-    jdbcUrl: jdbc:postgresql://postgres:5436/abc
+    jdbcUrl: jdbc:postgresql://postgres:5432/abc
     driver-class-name: org.postgresql.Driver
     username: abc
     password: abc
