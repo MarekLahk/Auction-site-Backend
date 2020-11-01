@@ -29,4 +29,4 @@ services:
       - postgres:db
 volumes:
   postgres-data:
-    - $HOME/docker/volumes/postgres:/var/lib/postgresql/data
+    $HOME/docker/volumes/postgres:/var/lib/postgresql/data
