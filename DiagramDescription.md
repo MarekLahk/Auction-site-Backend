@@ -1,3 +1,5 @@
+![Diagram](Diagram.png)
+
 # Components Diagram
 We are using one AWS EC2 server for building, testing and deployment. The server is using Ubuntu 20.04x.  
 All the configuration has been done by hand. Our configuration guide can be found [Here](ProductionInstallation.MD).  
