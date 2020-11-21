@@ -7,6 +7,10 @@ ubuntu@ec2-13-48-126-135.eu-north-1.compute.amazonaws.com
 port: 22
 ```
 
+## Diagram
+
+![Diagram](Diagram.png)
+
 ## Hardware  
 We are using Amazon Web Services EC2 server.
 Ours is running in Stockholm.  
