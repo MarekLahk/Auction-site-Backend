@@ -22,27 +22,20 @@ build backend:
     - ./gradlew assemble
     - sudo docker build --build-arg JAR_FILE=build/libs/*.jar -t ibay/backend .
 
-#test backend:
-#  stage: test
-#  tags:
-#    - IbayRunner
-#  script:
-#    - ./gradlew check
-
-deploy backend:
-  stage: deploy
-#  only:
-#    refs:
-#      - master
+test backend:
+  stage: test
   tags:
     - IbayRunner
   script:
-#    - sudo docker ps -q --filter "name=IbayBackend" | grep -q . && sudo docker stop IbayBackend && sudo docker rm IbayBackend
-#    - sudo docker ps -q --filter "name=postgres" | grep -q . && sudo docker stop postgres && sudo docker rm postgres
+    - ./gradlew check
+
+deploy backend:
+  stage: deploy
+  only:
+    refs:
+      - master
+  tags:
+    - IbayRunner
+  script:
     - docker-compose down
     - sudo docker-compose up -d
-#    - sudo docker container update --restart unless-stopped IbayBackend
-#    - mkdir -p ~/api-deployment # mkdir make folder api-deployment ~/ is under current user directory so for gitlab it would be /home/gitlab/api-deployment
-#    - rm -rf ~/api-deployment/* # rm remove -rf is recursive files from api-deployment
-#    - cp -r build/libs/. ~/api-deployment # cp - copy build/libs is where
-#    - sudo service Ibay_Backend restart  # this requires sudo rights for gitlab user
