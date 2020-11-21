@@ -20,7 +20,7 @@ build backend:
     - IbayRunner
   script:
     - ./gradlew assemble
-    - sudo docker build --build-arg JAR_FILE=build/libs/*.jar -t ibay/backend .
+    - docker build --build-arg JAR_FILE=build/libs/*.jar -t ibay/backend .
 
 test backend:
   stage: test
@@ -38,4 +38,4 @@ deploy backend:
     - IbayRunner
   script:
     - docker-compose down
-    - sudo docker-compose up -d
+    - docker-compose up -d
