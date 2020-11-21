@@ -6,7 +6,8 @@ plugins {
 }
 
 group = 'com.ibay'
-version = '0.0.1-SNAPSHOT'
+version = '0.1.0'
+archivesBaseName = 'Ibay_Backend'
 sourceCompatibility = '11'
 
 configurations {
@@ -40,4 +41,8 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+bootJar {
+	launchScript()
 }

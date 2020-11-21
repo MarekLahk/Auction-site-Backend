@@ -1,4 +1,4 @@
-package com.ibay.backend.theory.question6.sheep;
+package com.ibay.backend.theory.a_theory.question6.sheep;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -50,18 +50,13 @@ public class SheepFarm {
     private static Integer specialCode = 0;
 
     @PostMapping
-    Integer addSheep(Sheep sheep) {
-        return specialCode++;
+    Sheep addSheep(Sheep sheep) {
+        specialCode++;
+        return sheep;
     }
 
     @DeleteMapping
-    Boolean deleteSheep(Integer id){
-        return Boolean.TRUE;
-    }
-
-    @PutMapping
-    Boolean updateSheep(Sheep sheep) {
-        return Boolean.TRUE;
+    void deleteSheep(Integer id){
     }
 
     @GetMapping(path = "{id}")

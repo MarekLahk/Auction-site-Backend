@@ -1,4 +1,4 @@
-package com.ibay.backend.theory.question6.chocolate;
+package com.ibay.backend.theory.a_theory.question6.chocolate;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/api/v1/cake")
