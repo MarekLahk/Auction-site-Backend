@@ -89,4 +89,9 @@ server {
 
 ```
 
+## Install nodejs
+```
+apt install nodejs
+```
+
 
