@@ -1,4 +1,4 @@
-package com.ibay.backend.theory.question6.vineyard;
+package com.ibay.backend.theory.a_theory.question6.vineyard;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

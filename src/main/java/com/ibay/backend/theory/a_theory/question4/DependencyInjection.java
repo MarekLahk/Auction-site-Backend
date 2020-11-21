@@ -1,4 +1,4 @@
-package com.ibay.backend.theory.question4;
+package com.ibay.backend.theory.a_theory.question4;
 
 public class DependencyInjection {
 
@@ -9,8 +9,7 @@ public class DependencyInjection {
     //todo p1
     // In your words (do not use wiki definitions)
     // What is Dependency Injection?
-    // Answer: Dependency injection is a way of automatically creating objects that
-	//			are then passed to all the classes that need it.
+    // Answer: Dependency injection is system that creates instances of objects(1 instance per object) that are then distributed to objects that require them.
 
     //todo p2
     // Bring example from your code of Dependency Injection.
@@ -31,5 +30,5 @@ public class DependencyInjection {
 
     //todo p4
     // Name 1 disadvantage of Dependency Injection
-    // 1 Can be difficult to understand which dependecy is used in which situation
+    // 1 Can be difficult to learn, understand and adopt at first.
 }

@@ -1,4 +1,4 @@
-package com.ibay.backend.theory.question1;
+package com.ibay.backend.theory.a_theory.question1;
 
 public class Compilation {
 
