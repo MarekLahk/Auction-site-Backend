@@ -33,7 +33,7 @@ deploy backend:
   stage: deploy
   only:
     refs:
-      - master
+      - main
   tags:
     - IbayRunner
   script:
