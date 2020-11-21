@@ -44,6 +44,13 @@ apt-get install gitlab-runner
 ## Configuring Gitlab Runner
 These steps need to be done 2 times. One for frontend and one for backend.
 ```
+
+## Add Gitlab-runner to groups
+   ```
+   
+   usermod -a -G sudo,www-data,docker gitlab-runner
+   
+   ```
 gitlab-runner register
 ```
 1. Enter your gitlab url (https://gitlab.cs.ttu.ee/)
@@ -78,9 +85,4 @@ server {
 
 ```
 
-## Add applications to groups
-```
 
-usermod -a -G sudo,www-data,docker gitlab-runner
-
-```
