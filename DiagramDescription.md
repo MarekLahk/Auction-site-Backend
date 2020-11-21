@@ -7,16 +7,16 @@ All the configuration has been done by hand. Our configuration guide can be foun
 
 ## Backend pipeline
 #### Build
-Building is done by gradle. The resulting jar is but into a docker image.
+Building is done by gradle. The resulting jar is put into a docker image.
 #### Testing
-Testing is also executeb by gradle.
+Testing is also executed by gradle.
 #### Deployment
-Deployment consists of running a Postgreqsl docker container and the image from build is used to start a new backend container
+Deployment consists of running a Postgresql docker container and the image from build is used to start a new backend container.
 
 
 ## Frontend pipeline
 #### Build
-Building the frontend consists of downloading the requirements and building the application
+Building the frontend consists of downloading the requirements and building the application.
 #### Testing
 Currently, no tests for frontend.
 #### Deployment
