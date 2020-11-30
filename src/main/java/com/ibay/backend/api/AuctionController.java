@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/api/v1/auction")
+@RequestMapping({"/api/v1/auction", "/api/v1/auction2"})
 @RestController
 public class AuctionController {
 
