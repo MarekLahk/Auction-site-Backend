@@ -9,6 +9,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Map;
 
+import static com.ibay.backend.security.ApplicationUserRole.USER;
+
 @RequestMapping("/api/v1/user")
 @RestController
 public class UserController {
@@ -22,7 +24,9 @@ public class UserController {
 
     @PostMapping
     public String addUser(@Valid @NotNull @RequestBody User user) {
-        return userService.addUser(user);
+        System.out.println(user);
+        System.out.println("Here");
+        return userService.addUser(user, USER);
     }
 
     @GetMapping(path = "{id}")

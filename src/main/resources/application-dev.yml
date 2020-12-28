@@ -22,7 +22,11 @@ spring:
       repositories:
         bootstrap-mode: default
 
-
+application:
+  jwt:
+    secretKey = "securityKeysecurityKeysecurityKeysecurityKeysecurityKeysecurityKeysecurityKey"
+    tokenPrefix = "Bearer "
+    tokenExpirationAfterDays = 1
 
 
 

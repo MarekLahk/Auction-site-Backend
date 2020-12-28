@@ -15,6 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import java.sql.Timestamp;
 import java.util.Map;
 
+import static com.ibay.backend.security.ApplicationUserRole.USER;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -31,7 +32,7 @@ public class UserControllerTest {
     public UserService userService;
 
 
-    private User user = new User("id", "username", "email", "name", (Timestamp)null);
+    private User user = new User("id", "username", "email", "name", (Timestamp)null, null);
 
     @BeforeAll
     void setUp() {
@@ -43,7 +44,7 @@ public class UserControllerTest {
 
     @Test
     void addUserReturnUser() {
-        when(userService.addUser(user)).thenReturn(user.getId());
+        when(userService.addUser(user, USER)).thenReturn(user.getId());
         assertEquals(user.getId(),userController.addUser(user));
     }
 
@@ -63,7 +64,7 @@ public class UserControllerTest {
 
     @Test
     void updateUserByID() {
-        final User updateUser = new User(null, "New username", "New email", "New name", (Timestamp) null);
+        final User updateUser = new User(null, "New username", "New email", "New name", (Timestamp) null, null);
         when(userService.updateUserByID("id", updateUser)).thenReturn(Boolean.TRUE);
         when(userService.updateUserByID("wrongID", updateUser)).thenReturn(Boolean.FALSE);
         assertEquals(userController.updateUserByID("id", updateUser), Boolean.TRUE);

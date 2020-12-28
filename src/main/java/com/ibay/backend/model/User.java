@@ -15,28 +15,25 @@ import java.util.Map;
 public class User implements RowMapper<User> {
 
     @Getter private String id;
-
     @Getter private String username;
-
     @Getter private String email;
-
     @Getter private String full_name;
-
     @Getter private Timestamp registrationDate;
+    @Getter(onMethod = @__( @JsonIgnore )) private String password;
 
     public User(@JsonProperty("id") String id,
                 @JsonProperty("username") String username,
                 @JsonProperty("email") String email,
                 @JsonProperty("name") String full_name,
-                @JsonProperty("reg_date") Timestamp registrationDate)
-    {
+                @JsonProperty("reg_date") Timestamp registrationDate,
+                @JsonProperty("password") String password) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.full_name = full_name;
         this.registrationDate = registrationDate;
+        this.password = password;
     }
-
 
     public User() {
     }
@@ -56,7 +53,6 @@ public class User implements RowMapper<User> {
         return output;
     }
 
-
     @Override
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new User(
@@ -64,8 +60,8 @@ public class User implements RowMapper<User> {
                 rs.getString("username"),
                 rs.getString("email"),
                 rs.getString("full_name"),
-                rs.getTimestamp("registration_date")
-        );
+                rs.getTimestamp("registration_date"),
+                password);
     }
 
 
