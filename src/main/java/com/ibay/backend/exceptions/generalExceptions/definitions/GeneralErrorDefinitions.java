@@ -1,10 +1,9 @@
 package com.ibay.backend.exceptions.generalExceptions.definitions;
 
-import lombok.Getter;
+import com.ibay.backend.exceptions.ErrorDefinitionsInterface;
 import org.springframework.http.HttpStatus;
 
-@Getter
-public enum GeneralErrorDefinitions {
+public enum GeneralErrorDefinitions implements ErrorDefinitionsInterface {
 
     IdGeneration(
             "error/general/0001",
@@ -15,11 +14,8 @@ public enum GeneralErrorDefinitions {
     ;
 
     private final String errorCode;
-
     private final HttpStatus status;
-
     private final String userMessage;
-
     private final String devMessage;
 
     GeneralErrorDefinitions(String errorCode, String userMessage, String devMessage, HttpStatus status) {
@@ -28,5 +24,25 @@ public enum GeneralErrorDefinitions {
         this.devMessage = devMessage;
         this.status = status;
 
+    }
+
+    @Override
+    public String getErrorCode() {
+        return this.errorCode;
+    }
+
+    @Override
+    public HttpStatus getStatus() {
+        return this.status;
+    }
+
+    @Override
+    public String getUserMessage() {
+        return this.userMessage;
+    }
+
+    @Override
+    public String getDevMessage() {
+        return this.devMessage;
     }
 }

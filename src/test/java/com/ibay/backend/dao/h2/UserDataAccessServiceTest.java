@@ -45,13 +45,13 @@ class UserDataAccessServiceTest {
 
     @Test
     void insertUser() {
-        User user = new User(null, "uniqueUsername1", "uniqueEmail1", "uniqueFullName", (Timestamp) null, null);
+        User user = new User(null, "uniqueUsername1", "uniqueEmail1", "uniqueFullName", (Timestamp) null, null, null);
         assertTrue(userDao.insertUser("insertUserID", new Timestamp(System.currentTimeMillis()), user, null, getUserAuthoritiesString(List.of(USER))));
     }
 
     @Test
     void selectUserByID() {
-        User user = new User("123456789012", "username1", "email1", "full_name1", (Timestamp) null, null);
+        User user = new User("123456789012", "username1", "email1", "full_name1", (Timestamp) null, null, null);
         assertEquals(userDao.selectUserByID("123456789012").toTestString(), user.toTestString());
         assertNull(userDao.selectUserByID("invalidID"));
     }

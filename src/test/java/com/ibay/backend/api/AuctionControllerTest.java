@@ -2,6 +2,7 @@ package com.ibay.backend.api;
 
 
 import com.ibay.backend.MocksApplication;
+import com.ibay.backend.api.user.AuctionController;
 import com.ibay.backend.model.Auction;
 import com.ibay.backend.service.AuctionService;
 import org.junit.jupiter.api.BeforeAll;

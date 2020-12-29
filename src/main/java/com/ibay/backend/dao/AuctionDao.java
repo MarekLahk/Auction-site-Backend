@@ -16,4 +16,5 @@ public interface AuctionDao {
     Boolean deleteAuctionByID(String id);
 
     List<Auction> selectAuctionsByParameter(Map<String, String> parameters, Integer limit, Integer offset);
+
 }

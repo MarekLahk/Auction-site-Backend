@@ -1,10 +1,9 @@
 package com.ibay.backend.exceptions.userExceptions.definitions;
 
-import lombok.Getter;
+import com.ibay.backend.exceptions.ErrorDefinitionsInterface;
 import org.springframework.http.HttpStatus;
 
-@Getter
-public enum UserErrorDefinitions {
+public enum UserErrorDefinitions implements ErrorDefinitionsInterface {
 
     /*EXAMPLE("error/bid/{unique id here}",
             "Message that may be displayed to the user",
@@ -31,16 +30,22 @@ public enum UserErrorDefinitions {
             "Requst includes bad arguments",
             "Request includes bad arguments",
             HttpStatus.BAD_REQUEST
-    )
+    ),
+
+    PASSWORD_MISMATCH (
+            "error/user/0004",
+            "Password error",
+            "Password error",
+            HttpStatus.BAD_REQUEST
+    ),
+
+
     ;
 
 
     private final String errorCode;
-
     private final HttpStatus status;
-
     private final String userMessage;
-
     private final String devMessage;
 
     UserErrorDefinitions(String errorCode, String userMessage, String devMessage, HttpStatus status) {
@@ -48,8 +53,25 @@ public enum UserErrorDefinitions {
         this.userMessage = userMessage;
         this.devMessage = devMessage;
         this.status = status;
-
     }
 
+    @Override
+    public String getErrorCode() {
+        return this.errorCode;
+    }
 
+    @Override
+    public HttpStatus getStatus() {
+        return this.status;
+    }
+
+    @Override
+    public String getUserMessage() {
+        return this.userMessage;
+    }
+
+    @Override
+    public String getDevMessage() {
+        return this.devMessage;
+    }
 }

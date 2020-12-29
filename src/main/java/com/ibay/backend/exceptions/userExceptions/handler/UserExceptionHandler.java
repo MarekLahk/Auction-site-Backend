@@ -35,4 +35,5 @@ public class UserExceptionHandler {
     ExceptionBody userInvalidParametersExceptionHandler(UserInvalidParametersException exception) {
         return new ExceptionBody(UserErrorDefinitions.BAD_ARGUMENTS, exception.getMessage());
     }
+
 }

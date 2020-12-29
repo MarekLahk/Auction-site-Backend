@@ -9,5 +9,5 @@ CREATE TABLE auctions (
 
 
     constraint auctionIDAlphanumeric CHECK ( REGEXP_LIKE(auctionID ,'^[0-9a-zA-Z]{15}$')),
-    FOREIGN KEY (auctionOwner) REFERENCES ibay_user (userid)
+    FOREIGN KEY (auctionOwner) REFERENCES ibay_user (userid) ON DELETE SET NULL
 )

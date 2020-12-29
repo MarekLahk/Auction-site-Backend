@@ -1,6 +1,7 @@
 package com.ibay.backend.security;
 
 
+import com.ibay.backend.jwt.JwtConfig;
 import com.ibay.backend.jwt.JwtTokenVerifier;
 import com.ibay.backend.jwt.JwtUserAuthFilter;
 import com.ibay.backend.service.ApplicationUserService;
@@ -26,11 +27,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
     private final ApplicationUserService applicationUserService;
+    private final JwtConfig jwtConfig;
 
     @Autowired
-    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, ApplicationUserService applicationUserService) {
+    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, ApplicationUserService applicationUserService, JwtConfig jwtConfig) {
         this.passwordEncoder = passwordEncoder;
         this.applicationUserService = applicationUserService;
+        this.jwtConfig = jwtConfig;
     }
 
     @Override
@@ -39,8 +42,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(new JwtUserAuthFilter(authenticationManager()))
-                .addFilterAfter(new JwtTokenVerifier(), JwtUserAuthFilter.class)
+                .addFilter(new JwtUserAuthFilter(authenticationManager(), jwtConfig))
+                .addFilterAfter(new JwtTokenVerifier(jwtConfig), JwtUserAuthFilter.class)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/user").permitAll()

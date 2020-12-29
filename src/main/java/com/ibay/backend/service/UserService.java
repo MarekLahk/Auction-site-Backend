@@ -48,6 +48,7 @@ public class UserService {
     public String addUser(User user, ApplicationUserRole role) {
         if (userDao.columnContains("ibay_user", "username", user.getUsername())) { throw new UsernameTakenException(); }
         if (userDao.columnContains("ibay_user", "email", user.getEmail())) { throw new EmailTakenException(); }
+        if (!user.getPassword().equals(user.getConfirmPassword())) { throw new UserInvalidParametersException("Passwords do not match!"); }
         final var id = generateUniqueID();
         if (
                 userDao.insertUser(

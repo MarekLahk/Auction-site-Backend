@@ -1,4 +1,4 @@
-package com.ibay.backend.api;
+package com.ibay.backend.api.user;
 
 import com.ibay.backend.model.Bid;
 import com.ibay.backend.service.BidService;

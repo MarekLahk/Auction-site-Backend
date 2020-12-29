@@ -5,7 +5,7 @@ CREATE TABLE auction_bids (
     bidAmount NUMERIC(10, 2) NOT NULL,
     bidDateTime timestamp NOT NULL,
 
-    FOREIGN KEY (bidOwnerID) REFERENCES ibay_user (userid),
-    FOREIGN KEY (bidAuctionID) REFERENCES auctions (auctionID)
+    FOREIGN KEY (bidOwnerID) REFERENCES ibay_user (userid) ON DELETE SET NULL,
+    FOREIGN KEY (bidAuctionID) REFERENCES auctions (auctionID) ON DELETE CASCADE
 
 )

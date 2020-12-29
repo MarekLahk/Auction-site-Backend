@@ -21,9 +21,9 @@ public class CommonFunctions {
     public static String getUserAuthoritiesString(List<ApplicationUserRole> roles) {
         StringBuilder sb = new StringBuilder();
         for (ApplicationUserRole role : roles) {
-            role.getGrantedAuthorities().forEach(authority -> sb.append(authority.getAuthority()));
+            role.getGrantedAuthorities().forEach(authority -> sb.append(authority.getAuthority()).append(" "));
         }
-        return sb.toString();
+        return sb.toString().trim();
     }
 
 
