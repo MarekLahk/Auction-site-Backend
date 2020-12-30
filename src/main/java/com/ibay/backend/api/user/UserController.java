@@ -1,6 +1,7 @@
 package com.ibay.backend.api.user;
 
 import com.ibay.backend.model.User;
+import com.ibay.backend.security.CustomAnnotations.ForUsers;
 import com.ibay.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,7 @@ public class UserController {
         return userService.deleteUserByID(id);
     }
 
+    @ForUsers
     @PutMapping(path = "{id}")
     public Boolean updateUserByID(@PathVariable("id") String id, @RequestBody User updatedUser) {
         return userService.updateUserByID(id, updatedUser);

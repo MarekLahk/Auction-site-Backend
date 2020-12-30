@@ -4,7 +4,6 @@ package com.ibay.backend.api.user;
 import com.ibay.backend.model.Auction;
 import com.ibay.backend.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,6 +11,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
+
+import static com.ibay.backend.security.CustomAnnotations.ForUsers;
 
 @RequestMapping("/api/v1/auction")
 @RestController
@@ -24,7 +25,7 @@ public class AuctionController {
         this.auctionService = auctionService;
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @ForUsers
     @PostMapping()
     public String addAuction(@Valid @NotNull @RequestBody Auction auction) {
         System.out.println("Here");

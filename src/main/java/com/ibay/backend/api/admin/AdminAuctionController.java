@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.ibay.backend.security.CustomAnnotations.ForAdmins;
+
 @RequestMapping("/admin/api/v1/auction")
 @RestController
+@ForAdmins
 public class AdminAuctionController {
 
     private final AdminAuctionService adminAuctionService;
