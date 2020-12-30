@@ -1,6 +1,7 @@
 package com.ibay.backend.security;
 
 
+import com.ibay.backend.dao.AuthDao;
 import com.ibay.backend.jwt.JwtConfig;
 import com.ibay.backend.jwt.JwtTokenVerifier;
 import com.ibay.backend.jwt.JwtUserAuthFilter;
@@ -26,12 +27,14 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     private final ApplicationUserService applicationUserService;
     private final JwtConfig jwtConfig;
+    private final AuthDao authDao;
 
     @Autowired
-    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, ApplicationUserService applicationUserService, JwtConfig jwtConfig) {
+    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, ApplicationUserService applicationUserService, JwtConfig jwtConfig, AuthDao authDao) {
         this.passwordEncoder = passwordEncoder;
         this.applicationUserService = applicationUserService;
         this.jwtConfig = jwtConfig;
+        this.authDao = authDao;
     }
 
     @Override
@@ -45,7 +48,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JwtUserAuthFilter(authenticationManager(), jwtConfig))
-                .addFilterAfter(new JwtTokenVerifier(jwtConfig), JwtUserAuthFilter.class)
+                .addFilterAfter(new JwtTokenVerifier(jwtConfig, authDao), JwtUserAuthFilter.class)
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 

@@ -31,6 +31,8 @@ public class AuctionService {
 
     private Boolean evaluateAuction(Auction auction) {
         if (auction == null) throw new AuctionArgumentException("No auction provided");
+//        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+//        if (!auction.getOwnerID().equals("asd")) {throw new AuthorizationServiceException("Hello");}
         if (!userDao.columnContains("ibay_user", "userid", auction.getOwnerID())) throw new AuctionArgumentException("No such user exists");
         if (auction.getDuration() < 1 || auction.getDuration() > 20) throw new AuctionArgumentException("Invalid duration. Duration must be between 1 day and 20 days");
         if (!AuctionCategoryDefinitions.auctionCategories.contains(auction.getCategory()) || auction.getCategory().equals("all")) throw new AuctionArgumentException("No such category");
@@ -38,7 +40,6 @@ public class AuctionService {
     }
 
     public String addAuction(Auction auction) {
-        System.out.println(auction.toTestString());
         if (evaluateAuction(auction)) {
             auction.calculateEndTime();
             return auctionDao.insertAuction(idGenerator.generateStringID(15), auction);

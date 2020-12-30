@@ -4,6 +4,7 @@ import com.ibay.backend.model.Bid;
 import com.ibay.backend.security.CustomAnnotations.ForUsers;
 import com.ibay.backend.service.BidService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
@@ -24,6 +25,7 @@ public class BidController {
 
     @ForUsers
     @PostMapping()
+    @PreAuthorize("#bid.bidOwnerID == principal.id")
     public UUID addBid(@RequestBody Bid bid) {
         return bidService.addBid(bid);
     }

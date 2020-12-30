@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.UUID;
 
 public class JwtUserAuthFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -48,6 +49,7 @@ public class JwtUserAuthFilter extends UsernamePasswordAuthenticationFilter {
 
 
         String token = Jwts.builder()
+                .setId(String.valueOf(UUID.randomUUID()))
                 .setSubject(authResult.getName())
                 .claim("authorities", authResult.getAuthorities())
                 .setIssuedAt(new Date())

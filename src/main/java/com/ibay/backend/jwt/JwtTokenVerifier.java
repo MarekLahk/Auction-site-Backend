@@ -1,6 +1,7 @@
 package com.ibay.backend.jwt;
 
 import com.google.common.base.Strings;
+import com.ibay.backend.dao.AuthDao;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
@@ -25,10 +26,12 @@ import java.util.stream.Collectors;
 public class JwtTokenVerifier extends OncePerRequestFilter {
 
     private final JwtConfig jwtConfig;
+    private final AuthDao authDao;
 
     @Autowired
-    public JwtTokenVerifier(JwtConfig jwtConfig) {
+    public JwtTokenVerifier(JwtConfig jwtConfig, AuthDao authDao) {
         this.jwtConfig = jwtConfig;
+        this.authDao = authDao;
     }
 
     @Override
@@ -59,7 +62,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
                 Set<SimpleGrantedAuthority> grantedAuthorities = authorities.stream().map(m -> new SimpleGrantedAuthority(m.get("authority"))).collect(Collectors.toSet());
 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(
-                        username,
+                        authDao.selectUserByUsername(username).get(),
                         null,
                         grantedAuthorities
                 );

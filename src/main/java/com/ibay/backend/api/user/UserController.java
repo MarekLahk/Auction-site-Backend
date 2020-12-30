@@ -4,6 +4,7 @@ import com.ibay.backend.model.User;
 import com.ibay.backend.security.CustomAnnotations.ForUsers;
 import com.ibay.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,6 +45,7 @@ public class UserController {
 
     @ForUsers
     @PutMapping(path = "{id}")
+    @PreAuthorize("#updatedUser.id == principal.id")
     public Boolean updateUserByID(@PathVariable("id") String id, @RequestBody User updatedUser) {
         return userService.updateUserByID(id, updatedUser);
     }

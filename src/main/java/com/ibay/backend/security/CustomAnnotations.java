@@ -20,4 +20,7 @@ public class CustomAnnotations {
     @PreAuthorize("hasRole('admin')")
     public @interface ForAdmins {
     }
+
+
+
 }

@@ -4,6 +4,7 @@ package com.ibay.backend.api.user;
 import com.ibay.backend.model.Auction;
 import com.ibay.backend.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,6 +28,7 @@ public class AuctionController {
 
     @ForUsers
     @PostMapping()
+    @PreAuthorize("#auction.ownerID == principal.id")
     public String addAuction(@Valid @NotNull @RequestBody Auction auction) {
         System.out.println("Here");
         return auctionService.addAuction(auction);
