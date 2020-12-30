@@ -24,8 +24,6 @@ public class UserController {
 
     @PostMapping
     public String addUser(@Valid @NotNull @RequestBody User user) {
-        System.out.println(user);
-        System.out.println("Here");
         return userService.addUser(user, USER);
     }
 

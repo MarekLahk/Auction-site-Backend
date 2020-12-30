@@ -46,6 +46,7 @@ public class UserService {
 
 
     public String addUser(User user, ApplicationUserRole role) {
+        if (!user.getPassword().equals(user.getConfirmPassword())) { throw new UserInvalidParametersException("Passwords do not match!");}
         if (userDao.columnContains("ibay_user", "username", user.getUsername())) { throw new UsernameTakenException(); }
         if (userDao.columnContains("ibay_user", "email", user.getEmail())) { throw new EmailTakenException(); }
         if (!user.getPassword().equals(user.getConfirmPassword())) { throw new UserInvalidParametersException("Passwords do not match!"); }
@@ -78,6 +79,11 @@ public class UserService {
     }
 
     public Boolean updateUserByID(String id, User user) {
+
+        if (!user.getPassword().equals(user.getConfirmPassword())) {
+            throw new UserInvalidParametersException("Passwords do not match!");
+        }
+
         final Map<String, String> updateFields = user.getUpdateFields();
         if (updateFields.containsKey("username")) {
             if (userDao.columnContains("ibay_user", "username", updateFields.get("username"))) {

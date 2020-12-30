@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 import static com.ibay.backend.security.ApplicationUserPermission.*;
 
 public enum ApplicationUserRole {
-    USER(Sets.newHashSet()),
+    USER(Sets.newHashSet(
+            AUCTION_WRITE
+    )),
     ADMIN(Sets.newHashSet(
             USER_READ,
             USER_WRITE,

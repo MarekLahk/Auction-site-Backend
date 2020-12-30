@@ -38,6 +38,7 @@ public class AuctionService {
     }
 
     public String addAuction(Auction auction) {
+        System.out.println(auction.toTestString());
         if (evaluateAuction(auction)) {
             auction.calculateEndTime();
             return auctionDao.insertAuction(idGenerator.generateStringID(15), auction);

@@ -11,10 +11,11 @@ public interface AuctionDao {
 
     String insertAuction(String id, Auction auction);
 
+    List<Auction> selectAllAuctions();
+
     Auction selectAuctionByID(String id);
 
     Boolean deleteAuctionByID(String id);
 
     List<Auction> selectAuctionsByParameter(Map<String, String> parameters, Integer limit, Integer offset);
-
 }

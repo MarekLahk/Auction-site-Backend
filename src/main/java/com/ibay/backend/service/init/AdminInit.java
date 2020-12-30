@@ -11,6 +11,8 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+
 /**
  * Initialize first admin account if it doesnt exist already
  */
@@ -36,9 +38,10 @@ public class AdminInit {
                     initConfig.getUsername(),
                     initConfig.getEmail(),
                     "Admin1",
-                    null,
+                    new Timestamp(System.currentTimeMillis()),
                     initConfig.getPassword(),
-                    initConfig.getPassword());
+                    initConfig.getPassword(),
+                    null);
             userService.addUser(adminUser, ApplicationUserRole.ADMIN);
         } catch (EmailTakenException | UsernameTakenException e) {
 

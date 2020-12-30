@@ -44,6 +44,13 @@ public class AuctionDataAccessServicePostgres implements AuctionDao {
     }
 
     @Override
+    public List<Auction> selectAllAuctions() {
+        final String sqlQuery = "SELECT * FROM auctions";
+
+        return jdbcTemplate.query(sqlQuery, new Auction());
+    }
+
+    @Override
     public Auction selectAuctionByID(String id) {
         final String sqlQuery = String.format("SELECT * FROM auctions WHERE auctionID = '%s'", id);
         try {

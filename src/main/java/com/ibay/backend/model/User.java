@@ -21,6 +21,7 @@ public class User implements RowMapper<User> {
     @Getter private Timestamp registrationDate;
     @Getter(onMethod = @__( @JsonIgnore )) private String password;
     @Getter(onMethod = @__( @JsonIgnore )) private String confirmPassword;
+    @Getter(onMethod = @__( @JsonIgnore )) private String newPassword;
 
     public User(@JsonProperty("id") String id,
                 @JsonProperty("username") String username,
@@ -28,7 +29,8 @@ public class User implements RowMapper<User> {
                 @JsonProperty("name") String full_name,
                 @JsonProperty("reg_date") Timestamp registrationDate,
                 @JsonProperty("password") String password,
-                @JsonProperty("confirmPassword") String confirmPassword) {
+                @JsonProperty("confirmPassword") String confirmPassword,
+                @JsonProperty("newPassword") String newPassword){
         this.id = id;
         this.username = username;
         this.email = email;
@@ -36,6 +38,7 @@ public class User implements RowMapper<User> {
         this.registrationDate = registrationDate;
         this.password = password;
         this.confirmPassword = confirmPassword;
+        this.newPassword = newPassword;
     }
 
     public User() {
@@ -52,6 +55,7 @@ public class User implements RowMapper<User> {
         if (!isEmpty(this.full_name)) output.put("full_name", this.getFull_name());
         if (!isEmpty(this.email)) output.put("email", this.email);
         if (!isEmpty(this.username)) output.put("username", this.username);
+        if (!isEmpty(this.newPassword)) output.put("password", this.newPassword);
 
         return output;
     }
@@ -64,7 +68,7 @@ public class User implements RowMapper<User> {
                 rs.getString("email"),
                 rs.getString("full_name"),
                 rs.getTimestamp("registration_date"),
-                password, confirmPassword);
+                password, confirmPassword, newPassword);
     }
 
 

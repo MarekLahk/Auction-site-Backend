@@ -40,7 +40,6 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
         if (Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith(jwtConfig.getTokenPrefix())) {
             filterChain.doFilter(request, response);
-            return;
         } else {
 
             try {
@@ -65,6 +64,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
                         grantedAuthorities
                 );
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                filterChain.doFilter(request, response);
             } catch (JwtException e) {
                 throw new IllegalStateException("Unauthorized token");
             }

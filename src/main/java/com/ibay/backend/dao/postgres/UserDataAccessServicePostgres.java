@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Map;
 
 
@@ -39,6 +40,12 @@ public class UserDataAccessServicePostgres implements UserDao {
                         " VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                 id, user.getUsername(), passwordHash, authorities, user.getFull_name(), user.getEmail(), regTime.toString());
         return jdbcTemplate.update(sqlQuery) > 0 ? Boolean.TRUE : Boolean.FALSE;
+    }
+
+    @Override
+    public List<User> selectAllUsers() {
+        final String sqlQuery = "SELECT * FROM ibay_user";
+        return jdbcTemplate.query(sqlQuery, new User());
     }
 
 
