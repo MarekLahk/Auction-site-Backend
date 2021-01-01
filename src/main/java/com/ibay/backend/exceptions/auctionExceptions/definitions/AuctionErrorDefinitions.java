@@ -10,6 +10,13 @@ public enum AuctionErrorDefinitions implements ErrorDefinitionsInterface {
             "Invalid arguments",
             "Arguments provided are incorrect or missing",
             HttpStatus.BAD_REQUEST
+    ),
+
+    AUCTION_HAS_BIDS(
+            "error/auction/0002",
+            "Cannot delete auction with bids",
+            "Trying to delete auction that has bids",
+            HttpStatus.BAD_REQUEST
     )
 
     ;

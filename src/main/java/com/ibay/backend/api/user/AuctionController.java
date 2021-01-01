@@ -40,6 +40,8 @@ public class AuctionController {
     }
 
 
+    @ForUsers
+    @DeleteMapping(path = "{id}")
     public Boolean deleteAuctionByID(@PathVariable("id") String id) {
         return auctionService.deleteAuctionByID(id);
     }

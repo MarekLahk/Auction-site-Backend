@@ -2,6 +2,7 @@ package com.ibay.backend.service;
 
 import com.ibay.backend.MocksApplication;
 import com.ibay.backend.dao.AuctionDao;
+import com.ibay.backend.dao.BidDao;
 import com.ibay.backend.dao.UserDao;
 import com.ibay.backend.exceptions.auctionExceptions.AuctionArgumentException;
 import com.ibay.backend.model.Auction;
@@ -33,13 +34,14 @@ class AuctionServiceTest {
     IdGenerator idGenerator;
     UserDao userDao;
     AuctionService auctionService;
+    BidDao bidDao;
 
     @BeforeAll
     void setUp() {
         auctionDao = mock(AuctionDao.class);
         idGenerator = mock(IdGenerator.class);
         userDao = mock(UserDao.class);
-        auctionService = new AuctionService(auctionDao, userDao, idGenerator);
+        auctionService = new AuctionService(auctionDao, userDao, idGenerator, bidDao);
 
     }
 

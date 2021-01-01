@@ -71,4 +71,10 @@ public class BidDataAccessServicePostgres implements BidDao {
         sb.append("FETCH FIRST ").append(limit).append(" ROWS ONLY");
         return jdbcTemplate.query(sb.toString(), new Bid());
     }
+
+    @Override
+    public Boolean auctionHasBid(String auctionID) {
+        final String sqlQuery = String.format("SELECT EXISTS (SELECT 1 FROM auction_bids WHERE BIDAUCTIONID = '%s')", auctionID);
+        return jdbcTemplate.queryForObject(sqlQuery, Boolean.class);
+    }
 }

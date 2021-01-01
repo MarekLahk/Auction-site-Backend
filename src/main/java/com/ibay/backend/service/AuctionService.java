@@ -1,11 +1,14 @@
 package com.ibay.backend.service;
 
 import com.ibay.backend.dao.AuctionDao;
+import com.ibay.backend.dao.BidDao;
 import com.ibay.backend.dao.UserDao;
 import com.ibay.backend.exceptions.auctionExceptions.AuctionArgumentException;
+import com.ibay.backend.exceptions.auctionExceptions.AuctionHasBidsException;
 import com.ibay.backend.model.Auction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,13 +23,15 @@ public class AuctionService {
     private final AuctionDao auctionDao;
     private final IdGenerator idGenerator;
     private final UserDao userDao;
+    private final BidDao bidDao;
 
     @Autowired
-    public AuctionService(AuctionDao auctionDao, UserDao userDao, IdGenerator idGenerator) {
+    public AuctionService(AuctionDao auctionDao, UserDao userDao, IdGenerator idGenerator, BidDao bidDao) {
 
         this.auctionDao = auctionDao;
         this.userDao = userDao;
         this.idGenerator = idGenerator;
+        this.bidDao = bidDao;
     }
 
     private Boolean evaluateAuction(Auction auction) {
@@ -52,6 +57,14 @@ public class AuctionService {
     }
 
     public Boolean deleteAuctionByID(String id) {
+        Auction auction = auctionDao.selectAuctionByID(id);
+        if (auction != null) {
+            if (auction.getOwnerID() != CommonFunctions.getLoggedInUser().getId()) {
+                throw new AuthorizationServiceException("Unauthorized");
+            } else if (bidDao.auctionHasBid(id)) {
+                throw new AuctionHasBidsException();
+            }
+        }
         return auctionDao.deleteAuctionByID(id);
     }
 

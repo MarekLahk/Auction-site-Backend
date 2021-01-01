@@ -16,4 +16,6 @@ public interface BidDao {
     Bid getHighestBid(String auctionID);
 
     List<Bid> getBidByParams(Map<String, String> params, Integer offset, Integer limit);
+
+    Boolean auctionHasBid(String auctionID);
 }
