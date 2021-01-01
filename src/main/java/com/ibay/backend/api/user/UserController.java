@@ -45,7 +45,7 @@ public class UserController {
 
     @ForUsers
     @PutMapping(path = "{id}")
-    @PreAuthorize("#updatedUser.id == principal.id")
+    @PreAuthorize("#id == principal.id")
     public Boolean updateUserByID(@PathVariable("id") String id, @RequestBody User updatedUser) {
         return userService.updateUserByID(id, updatedUser);
     }

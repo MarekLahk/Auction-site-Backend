@@ -12,6 +12,8 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.ibay.backend.security.PasswordConfig.passwordEncoder;
+
 public class User implements RowMapper<User> {
 
     @Getter private String id;
@@ -55,7 +57,7 @@ public class User implements RowMapper<User> {
         if (!isEmpty(this.full_name)) output.put("full_name", this.getFull_name());
         if (!isEmpty(this.email)) output.put("email", this.email);
         if (!isEmpty(this.username)) output.put("username", this.username);
-        if (!isEmpty(this.newPassword)) output.put("password", this.newPassword);
+        if (!isEmpty(this.newPassword)) output.put("password", passwordEncoder().encode(this.newPassword));
 
         return output;
     }

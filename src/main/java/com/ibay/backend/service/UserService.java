@@ -8,6 +8,7 @@ import com.ibay.backend.exceptions.userExceptions.UsernameTakenException;
 import com.ibay.backend.model.User;
 import com.ibay.backend.security.ApplicationUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
+import static com.ibay.backend.service.CommonFunctions.*;
 import static com.ibay.backend.service.CommonFunctions.getUserAuthoritiesString;
 import static com.ibay.backend.service.ServiceParamChecks.userConversionMap;
 
@@ -80,11 +82,17 @@ public class UserService {
 
     public Boolean updateUserByID(String id, User user) {
 
-        if (!user.getPassword().equals(user.getConfirmPassword())) {
+
+        if (!passwordEncoder.matches(user.getPassword(), getLoggedInUser().getPassword())) {
+            throw new AuthorizationServiceException("Incorrect password!");
+        }
+
+        if (!user.getNewPassword().equals(user.getConfirmPassword())) {
             throw new UserInvalidParametersException("Passwords do not match!");
         }
 
         final Map<String, String> updateFields = user.getUpdateFields();
+
         if (updateFields.containsKey("username")) {
             if (userDao.columnContains("ibay_user", "username", updateFields.get("username"))) {
                 throw new UsernameTakenException();

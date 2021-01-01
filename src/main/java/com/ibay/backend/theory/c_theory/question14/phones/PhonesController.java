@@ -1,5 +1,14 @@
-package c_theory.question14.phones;
+package com.ibay.backend.theory.c_theory.question14.phones;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/v1/phone")
 public class PhonesController {
 
     //todo for question 14 there are 4 assignments in total
@@ -21,7 +30,14 @@ public class PhonesController {
 
     //todo C create a method to query single phone
 
+    @GetMapping(path = "{name}")
+    public Optional<Phone> getPhoneByName(@PathVariable String name) {
+        return Optional.empty();
+    }
+
     //todo D create a method to save a phone
+
+
 
     //todo E create a method to update a phone
 
