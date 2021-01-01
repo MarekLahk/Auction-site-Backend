@@ -46,4 +46,10 @@ public class AuthDataAccessServicePostgres implements AuthDao {
         System.out.println(new Timestamp(System.currentTimeMillis()));
         jdbcTemplate.execute(sqlQuery);
     }
+
+    @Override
+    public void cleanTokenTable() {
+        final String sqlQuery = String.format("DELETE FROM authtoken WHERE validuntil < '%s'", new Timestamp(System.currentTimeMillis()));
+        jdbcTemplate.execute(sqlQuery);
+    }
 }

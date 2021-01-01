@@ -12,4 +12,6 @@ public interface AuthDao {
     Boolean isTokenActive(String id);
 
     void addTokenInactive(String tokenID, Timestamp expirationDate);
+
+    void cleanTokenTable();
 }
