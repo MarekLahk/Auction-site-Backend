@@ -33,7 +33,7 @@ public class UserControllerTest {
     public UserService userService;
 
 
-    private User user = new User("id", "username", "email", "name", (Timestamp)null, null, null);
+    private User user = new User("id", "username", "email", "name", (Timestamp)null, null, null, null);
 
     @BeforeAll
     void setUp() {
@@ -65,7 +65,7 @@ public class UserControllerTest {
 
     @Test
     void updateUserByID() {
-        final User updateUser = new User(null, "New username", "New email", "New name", (Timestamp) null, null, null);
+        final User updateUser = new User(null, "New username", "New email", "New name", (Timestamp) null, null, null, null);
         when(userService.updateUserByID("id", updateUser)).thenReturn(Boolean.TRUE);
         when(userService.updateUserByID("wrongID", updateUser)).thenReturn(Boolean.FALSE);
         assertEquals(userController.updateUserByID("id", updateUser), Boolean.TRUE);

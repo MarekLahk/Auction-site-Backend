@@ -8,6 +8,7 @@ import com.ibay.backend.exceptions.userExceptions.UsernameTakenException;
 import com.ibay.backend.model.User;
 import com.ibay.backend.security.ApplicationUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import static com.ibay.backend.service.ServiceParamChecks.userConversionMap;
 
 
 @Service
+@Profile("!test")
 public class UserService {
 
     private final UserDao userDao;

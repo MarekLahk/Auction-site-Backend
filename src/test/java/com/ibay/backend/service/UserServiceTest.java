@@ -52,13 +52,13 @@ class UserServiceTest {
 
     @Test
     void addUser() {
-        User user = new User(null, "username", "email", "fullName", (Timestamp)null, null, null);
+        User user = new User(null, "username", "email", "fullName", (Timestamp)null, null, null, null);
         final String id = "123456789012";
         when(idGenerator.generateStringID(12)).thenReturn(id);
         when(userDao.columnContains("ibay_user","userID", id)).thenReturn(Boolean.FALSE).thenReturn(Boolean.TRUE);
         when(userDao.columnContains("ibay_user", "username", user.getUsername())).thenReturn(Boolean.FALSE).thenReturn(Boolean.TRUE).thenReturn(Boolean.FALSE);
         when(userDao.columnContains("ibay_user", "email", user.getEmail())).thenReturn(Boolean.FALSE).thenReturn(Boolean.TRUE).thenReturn(Boolean.FALSE);
-        when(userDao.insertUser(eq(id), any(Timestamp.class), eq(user), null, getUserAuthoritiesString(List.of(USER)))).thenReturn(Boolean.TRUE);
+        when(userDao.insertUser(eq(id), any(Timestamp.class), eq(user), eq(null), eq(getUserAuthoritiesString(List.of(USER))))).thenReturn(Boolean.TRUE);
         assertEquals(id, userService.addUser(user, USER));
         assertThrows(UsernameTakenException.class, () -> { userService.addUser(user, USER); });
         assertThrows(EmailTakenException.class, () -> { userService.addUser(user, USER); });
@@ -70,7 +70,7 @@ class UserServiceTest {
 
     @Test
     void getUserByID() {
-        User user = new User("id", "username", "email", "fullname", (Timestamp)null, null, null);
+        User user = new User("id", "username", "email", "fullname", (Timestamp)null, null, null, null);
         when(userDao.selectUserByID(user.getId())).thenReturn(user).thenReturn(null);
         assertEquals(userService.getUserByID(user.getId()), user);
         assertNull(userService.getUserByID(user.getId()));

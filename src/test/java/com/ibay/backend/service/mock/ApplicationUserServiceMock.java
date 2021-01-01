@@ -1,7 +1,7 @@
 package com.ibay.backend.service.mock;
 
 
-import com.ibay.backend.service.UserService;
+import com.ibay.backend.service.ApplicationUserService;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
@@ -9,12 +9,10 @@ import org.springframework.stereotype.Service;
 
 @Profile("test")
 @Service
-public class UserServiceMock{
+public class ApplicationUserServiceMock {
 
     @Bean
-    public UserService userService() {
-        return Mockito.mock(UserService.class);
+    public ApplicationUserService applicationUserService() {
+        return Mockito.mock(ApplicationUserService.class);
     }
-
-
 }

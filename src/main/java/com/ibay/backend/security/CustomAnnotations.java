@@ -17,7 +17,7 @@ public class CustomAnnotations {
 
     @Target({ElementType.METHOD, ElementType.TYPE})
     @Retention(RetentionPolicy.RUNTIME)
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasRole('ADMIN')")
     public @interface ForAdmins {
     }
 
