@@ -77,7 +77,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public LogoutSuccessHandler logoutHandler() {
-        return new LogoutHandler();
+        return new LogoutHandler(jwtConfig, authDao);
     }
 
 

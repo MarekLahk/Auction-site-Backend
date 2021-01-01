@@ -8,6 +8,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.Optional;
 
 @Profile("production")
@@ -35,5 +36,15 @@ public class AuthDataAccessServicePostgres implements AuthDao {
         System.out.println("Checking token active");
         final String sqlQuery = String.format("SELECT EXISTS (SELECT 1 FROM authtoken WHERE tokenid = '%s')", id);
         return !jdbcTemplate.queryForObject(sqlQuery, Boolean.class);
+    }
+
+    @Override
+    public void addTokenInactive(String tokenID, Timestamp expirationDate) {
+        final String sqlQuery = String.format(
+                "INSERT INTO authtoken (tokenid, validuntil) VALUES ('%s', '%s')",
+                tokenID, expirationDate);
+
+        System.out.println(new Timestamp(System.currentTimeMillis()));
+        jdbcTemplate.execute(sqlQuery);
     }
 }
