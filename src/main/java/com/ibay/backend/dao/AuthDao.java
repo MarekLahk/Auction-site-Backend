@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface AuthDao {
 
     Optional<AuthUser> selectUserByUsername(String username);
+
+    Boolean isTokenActive(String id);
 }

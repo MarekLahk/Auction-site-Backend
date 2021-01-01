@@ -29,4 +29,11 @@ public class AuthDataAccessServicePostgres implements AuthDao {
             return Optional.empty();
         }
     }
+
+    @Override
+    public Boolean isTokenActive(String id) {
+        System.out.println("Checking token active");
+        final String sqlQuery = String.format("SELECT EXISTS (SELECT 1 FROM authtoken WHERE tokenid = '%s')", id);
+        return !jdbcTemplate.queryForObject(sqlQuery, Boolean.class);
+    }
 }

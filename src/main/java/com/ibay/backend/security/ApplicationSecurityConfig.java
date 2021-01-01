@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -45,9 +46,14 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/api/v1/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
+                .antMatchers("/logout").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JwtUserAuthFilter(authenticationManager(), jwtConfig))
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessHandler(logoutHandler())
+                .and()
+                .addFilter(new JwtUserAuthFilter(authenticationManager(), jwtConfig, authDao))
                 .addFilterAfter(new JwtTokenVerifier(jwtConfig, authDao), JwtUserAuthFilter.class)
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -68,5 +74,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         provider.setUserDetailsService(applicationUserService);
         return provider;
     }
+
+    @Bean
+    public LogoutSuccessHandler logoutHandler() {
+        return new LogoutHandler();
+    }
+
 
 }

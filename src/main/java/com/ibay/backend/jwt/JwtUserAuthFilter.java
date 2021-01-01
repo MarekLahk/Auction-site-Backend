@@ -1,6 +1,7 @@
 package com.ibay.backend.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ibay.backend.dao.AuthDao;
 import com.ibay.backend.model.Credentials;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,10 +23,12 @@ public class JwtUserAuthFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final JwtConfig jwtConfig;
+    private final AuthDao authDao;
 
-    public JwtUserAuthFilter(AuthenticationManager authenticationManager, JwtConfig jwtConfig) {
+    public JwtUserAuthFilter(AuthenticationManager authenticationManager, JwtConfig jwtConfig, AuthDao authDao) {
         this.authenticationManager = authenticationManager;
         this.jwtConfig = jwtConfig;
+        this.authDao = authDao;
     }
 
     @Override
@@ -58,5 +61,13 @@ public class JwtUserAuthFilter extends UsernamePasswordAuthenticationFilter {
                 .compact();
 
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        String id = authDao.selectUserByUsername(authResult.getName()).get().getId();
+        response.getWriter().write(id);
     }
+
+
+
+
 }

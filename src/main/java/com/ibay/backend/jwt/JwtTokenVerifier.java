@@ -53,6 +53,8 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
                         .build()
                         .parseClaimsJws(token);
 
+                if (!isTokenValid(claimsJws.getBody().getId())) { throw new JwtException(""); }
+
                 Claims body = claimsJws.getBody();
 
                 String username = body.getSubject();
@@ -72,5 +74,9 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
                 throw new IllegalStateException("Unauthorized token");
             }
         }
+    }
+
+    private Boolean isTokenValid(String id) {
+        return authDao.isTokenActive(id);
     }
 }
