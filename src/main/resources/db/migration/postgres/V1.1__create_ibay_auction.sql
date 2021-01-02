@@ -1,6 +1,6 @@
 CREATE TABLE auctions (
     auctionID VARCHAR(15) NOT NULL PRIMARY KEY,
-    auctionOwner VARCHAR(12) REFERENCES ibay_user (userid) NOT NULL,
+    auctionOwner VARCHAR(12) REFERENCES ibay_user (userid),
     title VARCHAR(150) NOT NULL ,
     description TEXT,
     createTime timestamp,
