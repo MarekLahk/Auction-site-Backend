@@ -25,7 +25,7 @@ public class Docker {
 
     //todo F
     // Name and describe tools for docker architecture
-    // 1 Image - description of the container
+    // 1 Image - description for the creating of container
     // 2 Container - Environment where all the applications described in an image run.
 
     //todo G

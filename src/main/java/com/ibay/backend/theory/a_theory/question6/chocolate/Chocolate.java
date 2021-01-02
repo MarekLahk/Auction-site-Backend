@@ -1,13 +1,10 @@
 package com.ibay.backend.theory.a_theory.question6.chocolate;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/api/v1/cake")
 @RestController
@@ -54,33 +51,18 @@ public class Chocolate {
 
     private static List<Cake> allCakes;
 
-    @PostMapping
-    Boolean addCakeToList(Cake cake) {
-        return Boolean.TRUE;
-    }
-
     @PutMapping
-    Boolean improveRecipes(Cake cake) {
-        return Boolean.TRUE;
-    }
-
-    @GetMapping(path = "{size}")
-    Cake getCakeBySize(@PathVariable("size") String size) {
+    Cake addCakeToList(Cake cake) {
         return new Cake();
     }
 
-    @GetMapping(path = "{sweetness}")
-    Cake getCakeBySweetness(@PathVariable("sweetness") String sweetness) {
+    @PostMapping (path = "id")
+    Cake updateCakeUrl(Cake cake) {
         return new Cake();
     }
 
-    @GetMapping(path = "{ingredients}")
-    Cake getCakeByIngredients(@PathVariable("ingredients") List<String> ingredients) {
-        return new Cake();
-    }
-
-    @GetMapping(path = "{toppings}")
-    Cake getCakeByToppings(@PathVariable("toppings") List<String> toppings) {
-        return new Cake();
+    @GetMapping
+    List<Cake> getUserByProperty(@RequestParam Map<String, String> property) {
+        return Collections.emptyList();
     }
 }

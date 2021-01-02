@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/api/v1/vineyard")
 @RestController
@@ -47,33 +48,18 @@ public class Vineyard {
     void emptyMethodVoid(){
     }
 
-    @PutMapping
-    Boolean updateWine(String region, String description , String grape){
-        return Boolean.TRUE;
-    }
-
-    @GetMapping (path = "{id}")
-    Wine getWineDetails(@PathVariable("id") String id) {
+    @PostMapping (path = "{id}")
+    Wine updateWine(Wine wine){
         return new Wine();
     }
 
-    @GetMapping (path = "{region}")
-    List<Wine> getWinesByRegion(@PathVariable("region") String region) {
-        return Collections.emptyList();
-    }
-
-    @GetMapping (path = "{year}")
-    List<Wine> getWinesByYear(@PathVariable("year") Integer year) {
+    @GetMapping
+    List<Wine> getWineByParam(@RequestParam Map<String, String> params) {
         return Collections.emptyList();
     }
 
     @GetMapping (path = "{name}")
-    Wine getWineByName(@PathVariable("name") String name) {
-        return new Wine();
-    }
-
-    @GetMapping (path = "{grape}")
-    Wine getWineByGrape(@PathVariable("grape") String grape) {
+    Wine getWineByID(@PathVariable("name") String name) {
         return new Wine();
     }
 }
