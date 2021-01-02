@@ -3,6 +3,10 @@ package com.ibay.backend.theory.c_theory.question14.blogs;
 import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 @RequestMapping("/api/v1/blog")
 @RestController
 @NoArgsConstructor
@@ -59,6 +63,8 @@ public class BlogsController {
     //example blog?page=1
     //todo J add size (default page size is 20)
     //example blog?page=1&size=30
+    @GetMapping
+    public List<Blog> getBlogs(@RequestParam Map<String, String> parameters) {return new ArrayList<>();}
 
     //todo K modify correct method to order blogs
     // * by most recent first
