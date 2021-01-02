@@ -76,7 +76,7 @@ public class ChairsController {
     // * by lowest priced first
     // * by highest priced first
     // (you can assume that by default it searches most popular first)
-    //example chair=sorted=lowestPrice
-    //example chair=sorted=highestPrice
+    //example chair?sorted=lowestPrice
+    //example chair?sorted=highestPrice
 
 }
