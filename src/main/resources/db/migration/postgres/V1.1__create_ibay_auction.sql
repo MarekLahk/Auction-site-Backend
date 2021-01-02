@@ -7,5 +7,7 @@ CREATE TABLE auctions (
     endDateTime timestamp NOT NULL,
     category VARCHAR NOT NULL,
 
-    FOREIGN KEY (auctionOwner) REFERENCES ibay_user (userid)
+    constraint auctionID CHECK ( auctions.auctionID ~ '^[0-9a-zA-Z]{15}$' ),
+    FOREIGN KEY (auctionOwner) REFERENCES ibay_user (userid) ON DELETE SET NULL
+
 )
