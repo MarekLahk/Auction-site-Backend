@@ -5,6 +5,7 @@ import com.ibay.backend.security.ApplicationUserRole;
 import com.ibay.backend.service.AdminUserService;
 import com.ibay.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class AdminUserController {
         this.userService = userService;
     }
 
+    @PreAuthorize("#id != principal.id")
     @DeleteMapping(path = "{id}")
     public void DeleteUserByID(@PathVariable("id") String id) {
         adminUserService.deleteUserByID(id);
