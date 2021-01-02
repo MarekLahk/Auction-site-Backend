@@ -1,6 +1,6 @@
 CREATE TABLE auctions (
     auctionID VARCHAR(15) NOT NULL PRIMARY KEY,
-    auctionOwner VARCHAR(12) NOT NULL,
+    auctionOwner VARCHAR(12),
     title VARCHAR(150) NOT NULL ,
     description TEXT,
     createTime timestamp,
@@ -9,5 +9,5 @@ CREATE TABLE auctions (
 
 
     constraint auctionIDAlphanumeric CHECK ( REGEXP_LIKE(auctionID ,'^[0-9a-zA-Z]{15}$')),
-    FOREIGN KEY (auctionOwner) REFERENCES ibay_user (userid)
+    FOREIGN KEY (auctionOwner) REFERENCES ibay_user (userid) ON DELETE SET NULL
 )

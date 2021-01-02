@@ -1,13 +1,17 @@
-package com.ibay.backend.api;
+package com.ibay.backend.api.user;
 
 import com.ibay.backend.model.User;
+import com.ibay.backend.security.CustomAnnotations.ForUsers;
 import com.ibay.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Map;
+
+import static com.ibay.backend.security.ApplicationUserRole.USER;
 
 @RequestMapping("/api/v1/user")
 @RestController
@@ -22,7 +26,7 @@ public class UserController {
 
     @PostMapping
     public String addUser(@Valid @NotNull @RequestBody User user) {
-        return userService.addUser(user);
+        return userService.addUser(user, USER);
     }
 
     @GetMapping(path = "{id}")
@@ -39,7 +43,9 @@ public class UserController {
         return userService.deleteUserByID(id);
     }
 
+    @ForUsers
     @PutMapping(path = "{id}")
+    @PreAuthorize("#id == principal.id")
     public Boolean updateUserByID(@PathVariable("id") String id, @RequestBody User updatedUser) {
         return userService.updateUserByID(id, updatedUser);
     }

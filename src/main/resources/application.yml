@@ -22,7 +22,17 @@ spring:
       repositories:
         bootstrap-mode: default
 
+application:
+  jwt:
+    secretKey: "securityKeysecurityKeysecurityKeysecurityKeysecurityKeysecurityKeysecurityKey"
+    tokenPrefix : "Bearer "
+    tokenExpirationAfterDays : 1
 
+  admin:
+    init:
+      username: "AdminAccount"
+      email: "Num1Admin@bestadmin.com"
+      password: "password"
 
 
 

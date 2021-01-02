@@ -1,9 +1,10 @@
-package com.ibay.backend.api;
+package com.ibay.backend.api.user;
 
 
 import com.ibay.backend.model.Auction;
 import com.ibay.backend.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,7 +13,9 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping({"/api/v1/auction", "/api/v1/auction2"})
+import static com.ibay.backend.security.CustomAnnotations.ForUsers;
+
+@RequestMapping("/api/v1/auction")
 @RestController
 public class AuctionController {
 
@@ -23,8 +26,11 @@ public class AuctionController {
         this.auctionService = auctionService;
     }
 
+    @ForUsers
     @PostMapping()
+    @PreAuthorize("#auction.ownerID == principal.id")
     public String addAuction(@Valid @NotNull @RequestBody Auction auction) {
+        System.out.println("Here");
         return auctionService.addAuction(auction);
     }
 
@@ -34,6 +40,8 @@ public class AuctionController {
     }
 
 
+    @ForUsers
+    @DeleteMapping(path = "{id}")
     public Boolean deleteAuctionByID(@PathVariable("id") String id) {
         return auctionService.deleteAuctionByID(id);
     }

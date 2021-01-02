@@ -2,6 +2,7 @@ package com.ibay.backend.exceptions.auctionExceptions.handler;
 
 import com.ibay.backend.exceptions.ExceptionBody;
 import com.ibay.backend.exceptions.auctionExceptions.AuctionArgumentException;
+import com.ibay.backend.exceptions.auctionExceptions.AuctionHasBidsException;
 import com.ibay.backend.exceptions.auctionExceptions.definitions.AuctionErrorDefinitions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,6 +18,13 @@ public class AuctionExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     ExceptionBody AuctionArgumentExceptionHandler(AuctionArgumentException exception) {
         return new ExceptionBody(AuctionErrorDefinitions.AUCTION_INVALID_ARGUMENTS, exception.getMessage());
+    }
+
+    @ResponseBody
+    @ExceptionHandler(AuctionHasBidsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ExceptionBody AuctionHasBidsExceptionHandler(AuctionHasBidsException exception) {
+        return new ExceptionBody(AuctionErrorDefinitions.AUCTION_HAS_BIDS, exception.getMessage());
     }
 
 }

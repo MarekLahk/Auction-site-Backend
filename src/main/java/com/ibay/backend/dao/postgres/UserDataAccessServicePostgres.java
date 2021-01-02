@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Map;
 
 
@@ -33,12 +34,18 @@ public class UserDataAccessServicePostgres implements UserDao {
     }
 
     @Override
-    public Boolean insertUser(String id, Timestamp regTime, User user) {
+    public Boolean insertUser(String id, Timestamp regTime, User user, String passwordHash, String authorities) {
         final String sqlQuery = String.format("INSERT INTO ibay_user" +
-                        " (userID, username, full_name, email, registration_date)" +
-                        " VALUES ('%s', '%s', '%s', '%s', '%s')",
-                id, user.getUsername(), user.getFull_name(), user.getEmail(), regTime.toString());
+                        " (userID, username, password, roles, full_name, email, registration_date)" +
+                        " VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                id, user.getUsername(), passwordHash, authorities, user.getFull_name(), user.getEmail(), regTime.toString());
         return jdbcTemplate.update(sqlQuery) > 0 ? Boolean.TRUE : Boolean.FALSE;
+    }
+
+    @Override
+    public List<User> selectAllUsers() {
+        final String sqlQuery = "SELECT * FROM ibay_user";
+        return jdbcTemplate.query(sqlQuery, new User());
     }
 
 
@@ -52,12 +59,20 @@ public class UserDataAccessServicePostgres implements UserDao {
         }
     }
 
+    public User selectUserByUsername(String username) {
+        final String sqlQuery = String.format("SELECT * FROM ibay_user WHERE username = '%s'", username);
+        try {
+            return jdbcTemplate.queryForObject(sqlQuery, new User());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
     @Override
     public User selectUserByParams(Map<String, String> params) {
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT * FROM IBAY_USER WHERE ");
         String prefix = "";
-        System.out.println(params);
         for (String param: params.keySet()) {
             sb.append(prefix).append(param).append("='").append(params.get(param)).append("'");
             prefix=",";
