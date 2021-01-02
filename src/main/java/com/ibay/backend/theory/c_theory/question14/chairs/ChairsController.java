@@ -1,5 +1,6 @@
 package com.ibay.backend.theory.c_theory.question14.chairs;
 
+import com.ibay.backend.theory.c_theory.question14.phones.Phone;
 import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,10 +30,11 @@ public class ChairsController {
     //todo A add necessary annotations on the class
 
     //todo C create a method to query single chair
-    @GetMapping
-    public List<Chair> getChairs(@RequestParam Map<String, String> param) {
-        return new ArrayList<>();
+    @GetMapping(path = "{name}")
+    public Chair getChairByName(@PathVariable String name) {
+        return new Chair();
     }
+
 
     //todo D create a method to save a chair
     public Chair addNewChair(@RequestBody Chair chair) {
@@ -67,6 +69,9 @@ public class ChairsController {
     //example chair?type=soft
     //todo J modify correct method to support searching chairs by whether chair is in stock while keeping original functionality
     //example chair?inStock=true
+    @GetMapping
+    public List<Chair> getChairs(@RequestParam Map<String, String> parameters) {return new ArrayList<>();}
+
     //todo K modify correct method to order/sort chairs
     // * by lowest priced first
     // * by highest priced first
