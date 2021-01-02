@@ -15,21 +15,14 @@ import java.util.concurrent.TimeUnit;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Auction implements RowMapper<Auction> {
 
-    @Getter private String id;
-
-    @Getter private String title;
-
-    @Getter private String description;
-
-    @Getter private Integer duration;
-
-    @Getter private String ownerID;
-
-    @Getter private List<String> imageURLList;
-
-    @Getter private Timestamp endTime;
-
-    @Getter private String category;
+    private String id;
+    private String title;
+    private String description;
+    private Integer duration;
+    private String ownerID;
+    private List<String> imageURLList;
+    private Timestamp endTime;
+    private String category;
 
 
     public Auction(String id,

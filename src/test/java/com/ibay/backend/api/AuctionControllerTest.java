@@ -5,11 +5,11 @@ import com.ibay.backend.MocksApplication;
 import com.ibay.backend.api.user.AuctionController;
 import com.ibay.backend.model.Auction;
 import com.ibay.backend.service.AuctionService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
@@ -30,17 +29,17 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 public class AuctionControllerTest {
 
-    private AuctionService auctionService;
-    public AuctionController auctionController;
+    private final AuctionService auctionService;
+    private final AuctionController auctionController;
 
     private Auction auction = new Auction("id", "title", "description", 10, "ownerID", "automotive", null, new Timestamp(System.currentTimeMillis()));
 
-
-    @BeforeAll
-    void setUp() {
-        auctionService = mock(AuctionService.class);
-        auctionController = new AuctionController(auctionService);
+    @Autowired
+    public AuctionControllerTest(AuctionService auctionService) {
+        this.auctionService = auctionService;
+        this.auctionController = new AuctionController(auctionService);
     }
+
 
     @Test
     void addAuction() {

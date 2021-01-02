@@ -3,6 +3,7 @@ package com.ibay.backend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 
 import javax.validation.constraints.NotNull;
@@ -12,6 +13,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 @Getter
+@NoArgsConstructor
 public class Bid implements RowMapper<Bid> {
 
     private UUID bidID;
@@ -31,8 +33,6 @@ public class Bid implements RowMapper<Bid> {
         this.bidOwnerID = bidOwnerID;
         this.bidAmount = bidAmount;
     }
-
-    public Bid(){}
 
     @Override
     public Bid mapRow(ResultSet rs, int rowNum) throws SQLException {

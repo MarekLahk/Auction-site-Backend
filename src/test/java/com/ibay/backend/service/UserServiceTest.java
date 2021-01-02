@@ -52,7 +52,7 @@ class UserServiceTest {
 
     @Test
     void addUser() {
-        User user = new User(null, "username", "email", "fullName", (Timestamp)null, null, null, null);
+        User user = new User(null, "username", "email", "fullName", (Timestamp)null, "null", "null", null);
         final String id = "123456789012";
         when(idGenerator.generateStringID(12)).thenReturn(id);
         when(userDao.columnContains("ibay_user","userID", id)).thenReturn(Boolean.FALSE).thenReturn(Boolean.TRUE);
@@ -63,7 +63,7 @@ class UserServiceTest {
         assertThrows(UsernameTakenException.class, () -> { userService.addUser(user, USER); });
         assertThrows(EmailTakenException.class, () -> { userService.addUser(user, USER); });
         assertThrows(IdGenerationException.class, () -> { userService.addUser(user, USER); });
-        when(userDao.insertUser(eq(id), any(Timestamp.class), eq(user), null, getUserAuthoritiesString(List.of(USER)))).thenReturn(Boolean.FALSE);
+        when(userDao.insertUser(eq(id), any(Timestamp.class), eq(user), eq(null), eq(getUserAuthoritiesString(List.of(USER))))).thenReturn(Boolean.FALSE);
         when(userDao.columnContains("ibay_user","userID", id)).thenReturn(Boolean.FALSE);
         assertNull(userService.addUser(user, USER));
     }

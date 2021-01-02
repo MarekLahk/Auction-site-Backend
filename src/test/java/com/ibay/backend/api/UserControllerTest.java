@@ -4,11 +4,11 @@ import com.ibay.backend.MocksApplication;
 import com.ibay.backend.api.user.UserController;
 import com.ibay.backend.model.User;
 import com.ibay.backend.service.UserService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,7 +18,6 @@ import java.util.Map;
 
 import static com.ibay.backend.security.ApplicationUserRole.USER;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
@@ -29,19 +28,18 @@ import static org.mockito.Mockito.when;
 public class UserControllerTest {
 
 
-    public UserController userController;
-    public UserService userService;
+    private final UserController userController;
+    private final UserService userService;
 
 
     private User user = new User("id", "username", "email", "name", (Timestamp)null, null, null, null);
 
-    @BeforeAll
-    void setUp() {
-
-        userService = mock(UserService.class);
-
-        userController = new UserController(userService);
+    @Autowired
+    public UserControllerTest(UserService userService) {
+        this.userService = userService;
+        this.userController = new UserController(userService);
     }
+
 
     @Test
     void addUserReturnUser() {

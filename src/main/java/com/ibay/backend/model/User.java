@@ -2,8 +2,10 @@ package com.ibay.backend.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -14,16 +16,19 @@ import java.util.Map;
 
 import static com.ibay.backend.security.PasswordConfig.passwordEncoder;
 
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Getter
 public class User implements RowMapper<User> {
 
-    @Getter private String id;
-    @Getter private String username;
-    @Getter private String email;
-    @Getter private String full_name;
-    @Getter private Timestamp registrationDate;
-    @Getter(onMethod = @__( @JsonIgnore )) private String password;
-    @Getter(onMethod = @__( @JsonIgnore )) private String confirmPassword;
-    @Getter(onMethod = @__( @JsonIgnore )) private String newPassword;
+    private String id;
+    private String username;
+    private String email;
+    private String full_name;
+    private Timestamp registrationDate;
+    private String password;
+    private String confirmPassword;
+    private String newPassword;
 
     public User(@JsonProperty("id") String id,
                 @JsonProperty("username") String username,
@@ -43,8 +48,6 @@ public class User implements RowMapper<User> {
         this.newPassword = newPassword;
     }
 
-    public User() {
-    }
 
     private boolean isEmpty(String string) {
         return (string == null || string.strip().isEmpty());

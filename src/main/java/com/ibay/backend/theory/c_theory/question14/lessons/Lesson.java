@@ -1,4 +1,4 @@
-package c_theory.question14.lessons;
+package com.ibay.backend.theory.c_theory.question14.lessons;
 
 import java.time.Duration;
 import java.util.List;

@@ -1,6 +1,7 @@
 package com.ibay.backend.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,22 +16,13 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor
 public class AuthUser implements RowMapper<AuthUser>, UserDetails {
 
-    @NotNull
-    @NotEmpty
-    @Getter
-    private String id;
-    @NotNull
-    @NotEmpty
-    @Getter
-    private String username;
-    @NotNull
-    @NotEmpty
-    @Getter
-    private String password;
-    @Getter
-    private Set<SimpleGrantedAuthority> grantedAuthorities;
+    @NotNull @NotEmpty @Getter private String id;
+    @NotNull @NotEmpty @Getter private String username;
+    @NotNull @NotEmpty @Getter private String password;
+    @Getter private Set<SimpleGrantedAuthority> grantedAuthorities;
 
     public AuthUser(@NotNull @NotEmpty String id,
                     @NotNull @NotEmpty String username,
@@ -42,8 +34,6 @@ public class AuthUser implements RowMapper<AuthUser>, UserDetails {
         this.grantedAuthorities = grantedAuthorities;
     }
 
-    public AuthUser() {
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

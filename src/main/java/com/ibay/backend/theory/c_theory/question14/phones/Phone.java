@@ -9,5 +9,5 @@ public class Phone {
     private String manufacturer;
     private LocalDate releaseDate;
 //    ... many more
-    private List<c_theory.question14.phones.App> apps;
+    private List<App> apps;
 }

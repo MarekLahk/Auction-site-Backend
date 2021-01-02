@@ -4,11 +4,11 @@ import com.ibay.backend.MocksApplication;
 import com.ibay.backend.api.user.BidController;
 import com.ibay.backend.model.Bid;
 import com.ibay.backend.service.BidService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,7 +18,6 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
@@ -30,16 +29,17 @@ import static org.mockito.Mockito.when;
 class BidControllerTest {
 
 
-    public BidController bidController;
-    public BidService bidService;
+    private final BidController bidController;
+    private final BidService bidService;
 
     private Bid bid = new Bid(UUID.randomUUID(), "auctionID", "ownerID", BigDecimal.valueOf(10));
 
-    @BeforeAll
-    void setUp() {
-        bidService = mock(BidService.class);
-        bidController = new BidController(bidService);
+    @Autowired
+    public BidControllerTest(BidService bidService) {
+        this.bidService = bidService;
+        this.bidController = new BidController(bidService);
     }
+
 
     @Test
     void addBid() {
