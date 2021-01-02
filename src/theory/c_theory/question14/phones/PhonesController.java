@@ -35,12 +35,12 @@ public class PhonesController {
     //todo I modify correct method to support searching by manufacturer while keeping original functionality
     //Ex. phone?manufacturer=nokia
     //todo J modify correct method to support searching by price range: priceFrom-priceTo while keeping original functionality
-    //Ex. phone?minprice=10&maxprice=40
+    //Ex. phone?priceFrom=10&priceTo=40
     //todo K modify correct method to order/sort chairs
     // * by latest released date first
     // * by earliest released date first
     // (you can assume that by default it searches most popular first)
-    //Ex. phone?sorted=relLatest, phone?sorted=relEarliest
+    //Ex. phone?sort=latest, phone?sort=earliest
 
     @GetMapping
     public List<Phone> getPhones(@RequestParam Map<String, String> parameters) {return new ArrayList<>();}

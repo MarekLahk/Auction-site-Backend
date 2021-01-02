@@ -1,5 +1,16 @@
 package com.ibay.backend.theory.c_theory.question14.chairs;
 
+import com.ibay.backend.theory.c_theory.question14.phones.Phone;
+import lombok.NoArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+@RequestMapping("/api/v1/chair")
+@RestController
+@NoArgsConstructor
 public class ChairsController {
 
     //todo for question 14 there are 4 assignments in total
@@ -18,27 +29,54 @@ public class ChairsController {
 
     //todo A add necessary annotations on the class
 
-    //todo B create a method to query chairs (plural)
-
     //todo C create a method to query single chair
+    @GetMapping(path = "{name}")
+    public Chair getChairByName(@PathVariable String name) {
+        return new Chair();
+    }
+
 
     //todo D create a method to save a chair
+    public Chair addNewChair(@RequestBody Chair chair) {
+        return new Chair();
+    }
 
     //todo E create a method to update a chair
+    @PutMapping
+    public Chair updateChair(@RequestBody Chair chair) {
+        return new Chair();
+    }
 
     //todo F create a method to delete a chair
+    @DeleteMapping(path = "{name}")
+    public void deleteChair(@PathVariable String name) {}
 
     //todo G assuming each chair has a designer (one-to-one relation) create a method to query chair's designer
+    @GetMapping(path = "designer/{chairName}")
+    public Designer getDesigner(@PathVariable String chairName) {
+        return new Designer();
+    }
 
     //todo H create a method to update chair's name (and nothing else)
+    @PutMapping(path = "{name}")
+    public Chair updateChairName(@PathVariable String name,@RequestBody String newName) {
+        return new Chair();
+    }
 
+    //todo B create a method to query chairs (plural)
+    //querying for all chairs
     //todo I modify correct method to support searching chairs by type while keeping original functionality
-
+    //example chair?type=soft
     //todo J modify correct method to support searching chairs by whether chair is in stock while keeping original functionality
+    //example chair?inStock=true
+    @GetMapping
+    public List<Chair> getChairs(@RequestParam Map<String, String> parameters) {return new ArrayList<>();}
 
     //todo K modify correct method to order/sort chairs
     // * by lowest priced first
     // * by highest priced first
     // (you can assume that by default it searches most popular first)
+    //example chair?sorted=lowestPrice
+    //example chair?sorted=highestPrice
 
 }
